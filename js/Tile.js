@@ -1,6 +1,6 @@
 ﻿/// <reference path="Config.js" />
 /// <reference path="Storage.js" />
-/// <reference path="jquery-1.8.2.js" />
+/// <reference path="jquery-3.4.1.js" />
 
 //Método de instância usa o prototype
 //Método static não usa prototype
@@ -248,28 +248,22 @@ Tile.refreshBorder = function (aTile) {
 }
 
 Tile.Listar = function () {
-    //if (_tiles.length == 0) {
     var tilesJson;
 
     //Se tiver no local storage pega do local storage
     if (Storage.tiles) {
-        //if (false) {
         tilesJson = Storage.tiles;
     }
         //Se não, pega via ajax
     else {
-        //Tratamento especifico para tiles em CH, por enquanto
-        var ln = "_" + navigator.language;
-        if (ln != "_zh-CN")
-            ln = "";
 
         $.ajax({
             type: "GET",
-            url: "json/tiles" + ln + ".json",
+            url: "json/tiles.json",
             async: false,
             success: function (data) {
-                tilesJson = JSON.parse(data);
-                Storage.tiles = tilesJson;
+                Storage.tiles = data;
+                tilesJson = data;
             }
         });
     }
@@ -1121,6 +1115,7 @@ function ConfigTile(id) {
 
                             if (imgs.length > 0) {
                                 var img = document.createElement("img");
+                                img.crossOrigin = "Anonymous";
 
                                 img.onload = function () {
                                     processaImagem(img, function (imagemProcessada) {
