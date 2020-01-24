@@ -9,9 +9,9 @@ Cloned from [here](https://github.com/eaufavor/Modern-New-Tab-Page-NoAd) and upd
 5. Drag the .crx file from the parent directory on chrome://extensions/ page to install.
 
 ## Install using .crx file
-1. Download the .crx file from [here](TODO).
+1. Download the .crx file from [here](https://github.com/cristinacke28/Modern-New-Tab-Page-NoAd/blob/master/Modern-New-Tab-Page-NoAd.crx).
 2. Enable developer mode at chrome://extensions/ page.
-5. Drag the .crx file on chrome://extensions/ page to install.
+3. Drag the .crx file on chrome://extensions/ page to install.
 
 ### Changelog
 2020.1.25
