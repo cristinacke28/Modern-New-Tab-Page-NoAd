@@ -1,5 +1,5 @@
 /// <reference path="Config.js" />
-/// <reference path="Storage.js" />
+/// <reference path="MNTPStorage.js" />
 /// <reference path="Tile.js" />
 
 window.console || (window.console = {});
@@ -89,7 +89,7 @@ function carregarTemas() {
         url: "json/temas.json",
     async: false,
         success: function (data) {
-            var temas = JSON.parse(data);
+            var temas = data;
       var html = "";
       for (var i = 0; i < temas.length; i++) {
         var divBg = $("<div></div>");
@@ -768,7 +768,7 @@ function configEvents() {
 
     //Abrir APP
     $(".app").unbind("click");
-    $(".app").live("click", function () {
+    $(".app").on("click", function () {
         if ($(this).data("enabled")) {
             var url = $(this).data("url");
 
@@ -780,7 +780,7 @@ function configEvents() {
 
     //Click direito em um APP
     $(".app").unbind("contextmenu");
-    $(".app").live("contextmenu" , function (e) {
+    $(".app").on("contextmenu" , function (e) {
         var id = $(this).data("id");
 
         if (id != "ahfgeienlihckogmohjhadlkjgocpleb") { //Web store não pode desinstalar
@@ -1204,7 +1204,7 @@ function windowScroll() {
     if (Config.getSmoothScroll() == true){
         addDependencyFunction('smoothScroll', function () {
             $(".config").smoothScroll({ speed: 300 });
-            $("#main").smoothScroll({ speed: 100, snap: true, delta: Tile.TileSize1() + 4 });
+            $("#main").smoothScroll({ speed: 260, snap: true, delta: Tile.TileSize1() + 4 });
             $("#mainApps").smoothScroll({ snap: true, delta: 180 });
             $(".footer .item").smoothScroll({ speed: 50 });
         });
