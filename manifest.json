@@ -1,7 +1,7 @@
 {
 "update_url": "https://clients2.google.com/service/update2/crx",
 
-  "name": "Modern New Tab Page",
+  "name": "MNTP No Ads - Updated",
   "description": "Modern New Tab Page replaces the traditional new tab page by a new beautiful and elegant one, made of customizable live tiles.",
   "version": "2016.3.11",
   "incognito": "split",
