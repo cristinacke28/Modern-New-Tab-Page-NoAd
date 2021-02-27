@@ -2,7 +2,7 @@
 (function () {
 
 var queue = [
-	{ lib: 'jquery-ui', url: 'js/libs/jquery-ui-1.12.1.min.js' },
+	{ lib: 'jquery-ui', url: 'js/libs/jquery-ui.min.js' },
 	{ lib: 'smoothScroll', url: 'js/util/smoothScroll.js' },
 	{ lib: 'jfeed', url: 'js/util/jquery.jfeed.js' },
 	{ lib: 'lightbox', url: 'js/util/jquery.lightbox_me.js' },
