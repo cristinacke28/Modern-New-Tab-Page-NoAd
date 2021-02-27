@@ -1,8 +1,8 @@
 {
 "update_url": "https://clients2.google.com/service/update2/crx",
 
-  "name": "MNTP No Ads - Updated",
-  "description": "Modern New Tab Page replaces the traditional new tab page by a new beautiful and elegant one, made of customizable live tiles.",
+  "name": "MNTP-Reloaded",
+  "description": "MNTP Reloaded just works.",
   "version": "2.0",
   "incognito": "split",
   "icons": {
@@ -22,8 +22,7 @@
 		"history",
 		"bookmarks",
     "webRequest",
-    "webRequestBlocking",
-    "unlimitedStorage"
+    "webRequestBlocking"
   ],
   "background": {
     "page": "background.html"
