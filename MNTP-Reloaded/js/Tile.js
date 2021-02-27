@@ -12,438 +12,624 @@ var TILES_PCT = "tilesSize";
 var TILE_SIZE = 140;
 
 //Declaração da classe e contrutor;
-function Tile(tileJson) {
-    if (tileJson) {
-        this.Id = tileJson.Id;
-        this.Nome = tileJson.Nome;
-        this.Tamanho = tileJson.Tamanho;
-        this.Url = tileJson.Url;
-        this.Imagem = tileJson.Imagem;
-        this.Cor = tileJson.Cor;
-        this.CorFonte = tileJson.CorFonte;
-        this.RssUrl = tileJson.RssUrl;
-        this.LastSeenFeedTitle = tileJson.LastSeenFeedTitle;
-        this.LastFeedTitle = tileJson.LastFeedTitle;
-        this.LastFeedUrl = tileJson.LastFeedUrl;
-    } else {
-        this.Id = 0;
-        this.Nome = "";
-        this.Tamanho = 1;
-        this.Url = "";
-        this.Imagem = "";
-        this.Cor = "";
-        this.CorFonte = "";
-        this.RssUrl = "";
-        this.LastFeedTitle = "";
-        this.LastFeedUrl = "";
+class Tile {
+    constructor(tileJson) {
+        if (tileJson) {
+            this.Id = tileJson.Id;
+            this.Nome = tileJson.Nome;
+            this.Tamanho = tileJson.Tamanho;
+            this.Url = tileJson.Url;
+            this.Imagem = tileJson.Imagem;
+            this.Cor = tileJson.Cor;
+            this.CorFonte = tileJson.CorFonte;
+            this.RssUrl = tileJson.RssUrl;
+            this.LastSeenFeedTitle = tileJson.LastSeenFeedTitle;
+            this.LastFeedTitle = tileJson.LastFeedTitle;
+            this.LastFeedUrl = tileJson.LastFeedUrl;
+        } else {
+            this.Id = 0;
+            this.Nome = "";
+            this.Tamanho = 1;
+            this.Url = "";
+            this.Imagem = "";
+            this.Cor = "";
+            this.CorFonte = "";
+            this.RssUrl = "";
+            this.LastFeedTitle = "";
+            this.LastFeedUrl = "";
+        }
     }
-}
+    Html(preview) {
+        var aTile = $("<a></a>");
+        var divFullTile = $("<div class='fullTile'></div>");
+        var divTileImg = $("<div class='tileImg'></div>");
+        var pTileName = $("<p class='tileNameP'></p>");
+        var divFeed = $("<div class='feed'></div>");
+        var h2Feed = $("<h2></h2>");
+        var pFeed = $("<p></p>");
+        var divResize = $("<div class='resize' title='resize'></div>");
+        var divEdit = $("<div class='edit' title='edit'></div>");
 
-Tile.TileSize1 = function () {
-    return Math.floor(TILE_SIZE * (Tile.getTilesPct() / 100));
-};
+        var url = this.Url;
+        if (url.indexOf("http://") == -1 && url.indexOf("https://") == -1 && url.indexOf("chrome://") == -1) {
+            url = "http://" + url;
+        }
 
-Tile.TileSize2 = function () {
-    return (Tile.TileSize1() * 2) + 4;
-};
+        if (!preview) {
+            aTile.addClass("tile");
+            aTile.addClass("size" + this.Tamanho);
 
-Tile.setTilesPct = function (pct) {
-    Storage.tilesSize = pct;
-    RecalcularTamanho(pct);
-};
-
-Tile.getTilesPct = function () {
-    if (!Storage.tilesSize)
-        Tile.setTilesPct(100);
-
-    return Storage.tilesSize;
-};
-
-Tile.getColunas = function () {
-    var i = Config.getColumnNumber();
-
-    if (i == 0) {
-        var w = window.innerWidth;
-        var sobra = w > 1600 ? 360 : 180;
-
-        i = Math.floor((w - sobra) / (Tile.TileSize1() + 4));
-    }
-
-    return i;
-};
-
-Tile.getLinhas = function () {
-    var linhas = Config.getRowNumber();
-
-    if (linhas == 0) {
-
-        if (Config.getTilesOrientation() == "H") {
-
-            var tiles = Tile.Listar();
-            var colunas = Tile.getColunas();
-
-            linhas = 1;
-            var coluna = 1;
-            for (var i = 0; i < tiles.length; i++) {
-                var size = parseInt(tiles[i].Tamanho);
-
-                if (coluna + size > colunas + 1) {
-                    linhas++;
-                    coluna = 1;
-                }
-
-                coluna += size;
+            aTile.attr("id", "tile-" + this.Id);
+            aTile.attr("data-id", this.Id);
+            if (url.indexOf("chrome://") == -1) {
+                aTile.attr("href", url);
+            }
+            else {
+                aTile.attr("href", url);
+                aTile.attr("chref", url);
+                aTile.addClass("chromeUrl");
             }
 
-            if (coluna > colunas)
-                linhas++;
-
+            if (Tile.primeiroPosicionamento)
+                aTile.addClass("firstLoad");
         } else {
-            var t = Tile.TileSize1() + 4;
-            var h = window.innerHeight;
-            var sobra = 50;
-            linhas = Math.floor((h - sobra) / t);
-            linhas++;
-        }
-    }
-
-    return linhas;
-};
-
-Tile.primeiroPosicionamento = true;
-Tile.prototype.Html = function (preview) {
-    var aTile = $("<a></a>");
-    var divFullTile = $("<div class='fullTile'></div>");
-    var divTileImg = $("<div class='tileImg'></div>");
-    var pTileName = $("<p class='tileNameP'></p>");
-    var divFeed = $("<div class='feed'></div>");
-    var h2Feed = $("<h2></h2>");
-    var pFeed = $("<p></p>");
-    var divResize = $("<div class='resize' title='resize'></div>");
-    var divEdit = $("<div class='edit' title='edit'></div>");
-
-    var url = this.Url;
-    if (url.indexOf("http://") == -1 && url.indexOf("https://") == -1 && url.indexOf("chrome://") == -1){
-        url = "http://" + url;
-    }
-
-    if (!preview) {
-        aTile.addClass("tile");
-        aTile.addClass("size" + this.Tamanho);
-
-        aTile.attr("id", "tile-" + this.Id);
-        aTile.attr("data-id", this.Id);
-        if (url.indexOf("chrome://") == -1){
-            aTile.attr("href", url);
-        }
-        else{
-            aTile.attr("href", url);
-            aTile.attr("chref", url);
-            aTile.addClass("chromeUrl");
+            aTile.addClass("previewTile");
         }
 
-        if (Tile.primeiroPosicionamento)
-            aTile.addClass("firstLoad");
-    } else {
-        aTile.addClass("previewTile");
-    }
-
-    if (this.Cor) {
-        aTile.css("background-color", this.Cor);
-    } else if (preview) {
-        aTile.addClass("tileColor");
-        aTile.css("background-color", corSecundaria);
-    } else {
-        aTile.addClass("tileColor");
-    }
-
-    Tile.refreshBorder(aTile);
-
-    if (this.Cor || this.CorFonte) {
-
-        var fontColor = this.CorFonte || fontColorFromBackground(hex2rgb(this.Cor));
-        pTileName.css("color", fontColor);
-        divFeed.css("color", fontColor);
-    }
-
-    if (this.Imagem && this.Imagem != "null") {
-        divTileImg.css("background-image", "url('" + this.Imagem + "')");
-        // check external images
-        // NOTE: might've become unnecessary cause of inline images
-        if (this.Imagem.indexOf('http') == 0) {
-            var img = new Image();
-            var self = this;
-            img.onerror = function () {
-                var tile = $("#tile-" + self.Id);
-                var error = $("<div class='errorNoImage'>image not found</div>");
-                pTileName.html(self.Nome);
-                tile.find('.tileImg').css("background-image", "");
-                tile.find('.tileImg').append(pTileName);
-                tile.find('.tileImg').append(error);
-            };
-            img.src = this.Imagem;
-        }
-    } else {
-        pTileName.html(this.Nome);
-        divTileImg.append(pTileName);
-    }
-
-    divFullTile.append(divTileImg);
-
-    if (this.RssUrl) {
-        h2Feed.html(this.Nome);
-
-        if (  this.LastFeedTitle && this.LastFeedTitle.length > 0 &&
-              this.LastFeedUrl && this.LastFeedUrl.length > 0) {
-
-            pFeed.html(this.LastFeedTitle);
-
-            pFeed.unbind("click");
-            pFeed.click(function () {
-                document.location = tile.LastFeedUrl;
-                return false;
-            });
+        if (this.Cor) {
+            aTile.css("background-color", this.Cor);
+        } else if (preview) {
+            aTile.addClass("tileColor");
+            aTile.css("background-color", corSecundaria);
+        } else {
+            aTile.addClass("tileColor");
         }
 
-        divFeed.append(h2Feed);
-        divFeed.append(pFeed);
-        divFullTile.append(divFeed);
-        divFullTile.append(divTileImg.clone());
+        Tile.refreshBorder(aTile);
+
+        if (this.Cor || this.CorFonte) {
+
+            var fontColor = this.CorFonte || fontColorFromBackground(hex2rgb(this.Cor));
+            pTileName.css("color", fontColor);
+            divFeed.css("color", fontColor);
+        }
+
+        if (this.Imagem && this.Imagem != "null") {
+            divTileImg.css("background-image", "url('" + this.Imagem + "')");
+            // check external images
+            // NOTE: might've become unnecessary cause of inline images
+            if (this.Imagem.indexOf('http') == 0) {
+                var img = new Image();
+                var self = this;
+                img.onerror = function () {
+                    var tile = $("#tile-" + self.Id);
+                    var error = $("<div class='errorNoImage'>image not found</div>");
+                    pTileName.html(self.Nome);
+                    tile.find('.tileImg').css("background-image", "");
+                    tile.find('.tileImg').append(pTileName);
+                    tile.find('.tileImg').append(error);
+                };
+                img.src = this.Imagem;
+            }
+        } else {
+            pTileName.html(this.Nome);
+            divTileImg.append(pTileName);
+        }
+
+        divFullTile.append(divTileImg);
+
+        if (this.RssUrl) {
+            h2Feed.html(this.Nome);
+
+            if (this.LastFeedTitle && this.LastFeedTitle.length > 0 &&
+                this.LastFeedUrl && this.LastFeedUrl.length > 0) {
+
+                pFeed.html(this.LastFeedTitle);
+
+                pFeed.unbind("click");
+                pFeed.click(function () {
+                    document.location = tile.LastFeedUrl;
+                    return false;
+                });
+            }
+
+            divFeed.append(h2Feed);
+            divFeed.append(pFeed);
+            divFullTile.append(divFeed);
+            divFullTile.append(divTileImg.clone());
+        }
+
+        aTile.append(divFullTile);
+
+        if (!preview) {
+            aTile.append(divResize);
+            aTile.append(divEdit);
+        }
+
+        return aTile[0].outerHTML;
     }
+    Salvar() {
+        var tiles = Tile.Listar();
 
-    aTile.append(divFullTile);
+        var alterou = false;
+        var tile = this;
+        tiles.forEach(function (t) {
+            if (t.Id == tile.Id) {
+                t.Nome = tile.Nome;
+                t.Tamanho = tile.Tamanho;
+                t.Url = tile.Url;
+                t.Imagem = tile.Imagem;
+                t.Cor = tile.Cor;
+                t.CorFonte = tile.CorFonte;
+                t.RssUrl = tile.RssUrl;
+                t.LastFeedTitle = tile.LastFeedTitle;
+                t.LastFeedUrl = tile.LastFeedUrl;
+                t.LastSeenFeedTitle = tile.LastSeenFeedTitle;
 
-    if (!preview) {
-        aTile.append(divResize);
-        aTile.append(divEdit);
+                alterou = true;
+            }
+        });
+
+        if (!alterou) {
+            tiles.push(tile);
+        }
+
+        Storage.tiles = tiles;
     }
+    Remover() {
+        var lista = Tile.Listar();
+        var listaNova = [];
+        var c = 0;
 
-    return aTile[0].outerHTML;
-};
+        for (var i = 0; i < lista.length; i++) {
+            var tile = lista[i];
+            if (tile.Id != this.Id) {
+                listaNova.push(tile);
+            }
+        }
 
-Tile.refreshBorder = function (aTile) {
-    var pageBg = hex2rgb(corPrimaria);
-    var tileBg = aTile[0].style.backgroundColor ? rgb2hex(aTile[0].style.backgroundColor) : corSecundaria;
-    tileBg = hex2rgb(tileBg);
-
-    // dark background
-    if (isColorDark(tileBg)) {
-        aTile.addClass('dark-tile-bg');
+        Storage.tiles = listaNova;
+        _tiles = [];
     }
-    // border
-    var border;
-    if (isColorHighLumen(pageBg))
-        border = darkBorderColorFromBackground(tileBg);
-    else
-        border = brightBorderColorFromBackground(tileBg);
-    border = "rgb(" + [border.r, border.g, border.b].join(',') + ')';
-    aTile.css("border", "1px solid " + border);
-};
+    GetLastFeed() {
+        var tile = this;
+        var url = this.RssUrl;
 
-Tile.Listar = function () {
-    var tilesJson;
-    //Se tiver no local storage pega do local storage
-    if (Storage.tiles) {
-        tilesJson = Storage.tiles;
-    }
-        //Se não, pega via ajax
-    else {
-        $.ajax({
-            type: "GET",
-            url: "json/tiles.json",
-            async: false,
-            success: function (data) {
-                Storage.tiles = data;
-                tilesJson = data;
+        getFeedFromUrl({
+            url: url,
+            success: function (feed) {
+                var noticia = {};
+
+                if (feed.items.length > 0) {
+                    tile.LastFeedTitle = feed.items[0].title;
+                    tile.LastFeedUrl = feed.items[0].link;
+                    tile.Salvar();
+                }
+
+                var tileDom = $(".tile[data-id=" + tile.Id + "]");
+                var pFeed = tileDom.find(".feed p");
+
+                pFeed.html(tile.LastFeedTitle);
+
+                pFeed.unbind("click");
+                pFeed.click(function (e) {
+                    if (e.which == 1) {
+                        document.location = tile.LastFeedUrl;
+                        return false;
+                    } else if (e.which == 2) {
+                        chrome.tabs.create({
+                            url: tile.LastFeedUrl,
+                            active: false
+                        });
+                        return false;
+                    }
+                });
+
+                if (tile.LastSeenFeedTitle != tile.LastFeedTitle) {
+                    AnimaTile(tile);
+                }
+            },
+            failure: function (msg) {
+                console.log("----------");
+                console.log("Erro loading " + tile.Nome + " feed:");
+                console.log("** Error loading feed from " + url + " - " + msg);
             }
         });
     }
-
-    _tiles = [];
-    //Transforma a lista de Json em objetos
-    for (var i = 0; i < tilesJson.length; i++) {
-        var tileJson = tilesJson[i];
-        _tiles.push(new Tile(tileJson));
+    static TileSize1() {
+        return Math.floor(TILE_SIZE * (Tile.getTilesPct() / 100));
     }
+    static TileSize2() {
+        return (Tile.TileSize1() * 2) + 4;
+    }
+    static setTilesPct(pct) {
+        Storage.tilesSize = pct;
+        RecalcularTamanho(pct);
+    }
+    static getTilesPct() {
+        if (!Storage.tilesSize)
+            Tile.setTilesPct(100);
 
-    return _tiles;
-};
+        return Storage.tilesSize;
+    }
+    static getColunas() {
+        var i = Config.getColumnNumber();
 
-Tile.CarregarTiles = function () {
-    //Pega todos os tiles,
-    var tiles = Tile.Listar();
-    var html = "";
+        if (i == 0) {
+            var w = window.innerWidth;
+            var sobra = w > 1600 ? 360 : 180;
 
-    /// NOTE: Caching is in development
-    if (false && localStorage.cacheMainHtml) {
-        html = localStorage.cacheMainHtml;
-    } else {
-        //concatena o html de cada um deles
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            html += tile.Html();
+            i = Math.floor((w - sobra) / (Tile.TileSize1() + 4));
         }
 
-        localStorage.cacheMainHtml = html;
+        return i;
     }
+    static getLinhas() {
+        var linhas = Config.getRowNumber();
 
-    //e joga tudo dentro da div.
-    $("#main").html(html);
+        if (linhas == 0) {
 
-    //Carrega os feeds, se tiver
-    setTimeout(function () {
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (tile.RssUrl && tile.RssUrl != "") {
-                tile.GetLastFeed();
+            if (Config.getTilesOrientation() == "H") {
+
+                var tiles = Tile.Listar();
+                var colunas = Tile.getColunas();
+
+                linhas = 1;
+                var coluna = 1;
+                for (var i = 0; i < tiles.length; i++) {
+                    var size = parseInt(tiles[i].Tamanho);
+
+                    if (coluna + size > colunas + 1) {
+                        linhas++;
+                        coluna = 1;
+                    }
+
+                    coluna += size;
+                }
+
+                if (coluna > colunas)
+                    linhas++;
+
+            } else {
+                var t = Tile.TileSize1() + 4;
+                var h = window.innerHeight;
+                var sobra = 50;
+                linhas = Math.floor((h - sobra) / t);
+                linhas++;
             }
         }
-    }, 10);
 
-    //Ativa ordenação
-    setTimeout(EnableSort, 10);
-
-    //Eventos do tiles
-    setTimeout(TileEvents, 10);
-
-    //Calcula o tamanho dos tiles
-    if (Tile.getTilesPct() != 100) {
-        RecalcularTamanho(Tile.getTilesPct());
-    } else {
-        RecalculaAnimacao();
+        return linhas;
     }
-};
+    static refreshBorder(aTile) {
+        var pageBg = hex2rgb(corPrimaria);
+        var tileBg = aTile[0].style.backgroundColor ? rgb2hex(aTile[0].style.backgroundColor) : corSecundaria;
+        tileBg = hex2rgb(tileBg);
 
-Tile.GetTile = function (id) {
-    var lista = Tile.Listar();
-
-    for (var i = 0; i < lista.length; i++) {
-        if (lista[i].Id == id)
-            return lista[i];
-    }
-};
-
-Tile.SalvarOrdenacao = function () {
-    var lista = Tile.Listar();
-    var listaNova = [];
-    var c = 0;
-
-    $(".tile").each(function () {
-        var tile = new Tile();
-
-        var id = $(this).data("id");
-
-        tile = lista.filter(function (t) { return t.Id == id; })[0];
-
-        listaNova[c] = tile;
-
-        c++;
-    });
-
-    Storage.tiles = listaNova;
-    _tiles = [];
-};
-
-Tile.prototype.Salvar = function () {
-    var tiles = Tile.Listar();
-
-    var alterou = false;
-    var tile = this;
-    tiles.forEach(function (t) {
-        if (t.Id == tile.Id) {
-            t.Nome = tile.Nome;
-            t.Tamanho = tile.Tamanho;
-            t.Url = tile.Url;
-            t.Imagem = tile.Imagem;
-            t.Cor = tile.Cor;
-            t.CorFonte = tile.CorFonte;
-            t.RssUrl = tile.RssUrl;
-            t.LastFeedTitle = tile.LastFeedTitle;
-            t.LastFeedUrl = tile.LastFeedUrl;
-            t.LastSeenFeedTitle = tile.LastSeenFeedTitle;
-
-            alterou = true;
+        // dark background
+        if (isColorDark(tileBg)) {
+            aTile.addClass('dark-tile-bg');
         }
-    });
+        // border
+        var border;
+        if (isColorHighLumen(pageBg))
+            border = darkBorderColorFromBackground(tileBg);
 
-    if (!alterou) {
-        tiles.push(tile);
+        else
+            border = brightBorderColorFromBackground(tileBg);
+        border = "rgb(" + [border.r, border.g, border.b].join(',') + ')';
+        aTile.css("border", "1px solid " + border);
     }
-
-    Storage.tiles = tiles;
-};
-
-Tile.prototype.Remover = function () {
-    var lista = Tile.Listar();
-    var listaNova = [];
-    var c = 0;
-
-    for (var i = 0; i < lista.length; i++) {
-        var tile = lista[i];
-        if (tile.Id != this.Id) {
-            listaNova.push(tile);
+    static Listar() {
+        var tilesJson;
+        //Se tiver no local storage pega do local storage
+        if (Storage.tiles) {
+            tilesJson = Storage.tiles;
         }
-    }
 
-    Storage.tiles = listaNova;
-    _tiles = [];
-};
-
-Tile.GetNewId = function () {
-    var id = 0;
-    var tiles = Tile.Listar();
-    for (var i = 0; i < tiles.length; i++) {
-        id = Math.max(tiles[i].Id, id);
-    }
-
-    return id + 1;
-};
-
-Tile.prototype.GetLastFeed = function () {
-    var tile = this;
-    var url = this.RssUrl;
-
-    getFeedFromUrl({
-        url: url,
-        success: function (feed) {
-            var noticia = {};
-
-            if (feed.items.length > 0) {
-                tile.LastFeedTitle = feed.items[0].title;
-                tile.LastFeedUrl = feed.items[0].link;
-                tile.Salvar();
-            }
-
-            var tileDom = $(".tile[data-id=" + tile.Id + "]");
-            var pFeed = tileDom.find(".feed p");
-
-            pFeed.html(tile.LastFeedTitle);
-
-            pFeed.unbind("click");
-            pFeed.click(function (e) {
-                if (e.which == 1) {
-                    document.location = tile.LastFeedUrl;
-                    return false;
-                } else if (e.which == 2) {
-                    chrome.tabs.create({
-                        url: tile.LastFeedUrl,
-                        active: false
-                    });
-                    return false;
+        //Se não, pega via ajax
+        else {
+            $.ajax({
+                type: "GET",
+                url: "json/tiles.json",
+                async: false,
+                success: function (data) {
+                    Storage.tiles = data;
+                    tilesJson = data;
                 }
             });
-
-            if (tile.LastSeenFeedTitle != tile.LastFeedTitle) {
-                AnimaTile(tile);
-            }
-        },
-        failure: function (msg) {
-            console.log("----------");
-            console.log("Erro loading " + tile.Nome + " feed:");
-            console.log("** Error loading feed from " + url + " - " + msg);
         }
-    });
-};
+
+        _tiles = [];
+        //Transforma a lista de Json em objetos
+        for (var i = 0; i < tilesJson.length; i++) {
+            var tileJson = tilesJson[i];
+            _tiles.push(new Tile(tileJson));
+        }
+
+        return _tiles;
+    }
+    static CarregarTiles() {
+        //Pega todos os tiles,
+        var tiles = Tile.Listar();
+        var html = "";
+
+        /// NOTE: Caching is in development
+        if (false && localStorage.cacheMainHtml) {
+            html = localStorage.cacheMainHtml;
+        } else {
+            //concatena o html de cada um deles
+            for (var i = 0; i < tiles.length; i++) {
+                var tile = tiles[i];
+                html += tile.Html();
+            }
+
+            localStorage.cacheMainHtml = html;
+        }
+
+        //e joga tudo dentro da div.
+        $("#main").html(html);
+
+        //Carrega os feeds, se tiver
+        setTimeout(function () {
+            for (var i = 0; i < tiles.length; i++) {
+                var tile = tiles[i];
+                if (tile.RssUrl && tile.RssUrl != "") {
+                    tile.GetLastFeed();
+                }
+            }
+        }, 10);
+
+        //Ativa ordenação
+        setTimeout(EnableSort, 10);
+
+        //Eventos do tiles
+        setTimeout(TileEvents, 10);
+
+        //Calcula o tamanho dos tiles
+        if (Tile.getTilesPct() != 100) {
+            RecalcularTamanho(Tile.getTilesPct());
+        } else {
+            RecalculaAnimacao();
+        }
+    }
+    static GetTile(id) {
+        var lista = Tile.Listar();
+
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].Id == id)
+                return lista[i];
+        }
+    }
+    static SalvarOrdenacao() {
+        var lista = Tile.Listar();
+        var listaNova = [];
+        var c = 0;
+
+        $(".tile").each(function () {
+            var tile = new Tile();
+
+            var id = $(this).data("id");
+
+            tile = lista.filter(function (t) { return t.Id == id; })[0];
+
+            listaNova[c] = tile;
+
+            c++;
+        });
+
+        Storage.tiles = listaNova;
+        _tiles = [];
+    }
+    static GetNewId() {
+        var id = 0;
+        var tiles = Tile.Listar();
+        for (var i = 0; i < tiles.length; i++) {
+            id = Math.max(tiles[i].Id, id);
+        }
+
+        return id + 1;
+    }
+    static PosicionarTilesPrimeiraVez() {
+        //espaço ocupado por tile
+        var t = Tile.TileSize1() + 4;
+
+        var colunas = Tile.getColunas();
+
+        var coluna = 1;
+        var linha = 1;
+
+        var velocidadeAnimacao = Config.getVelocidadeAnimacaoInicialTiles();
+
+        if (Config.getAnimacaoInicialTiles()) {
+            $(".tile, .btnAddTile").css("-webkit-transition", "none");
+
+            $(".tile, .btnAddTile").each(function () {
+                var size = 1;
+
+                if ($(this).hasClass("size2"))
+                    size = 2;
+
+                if (coluna + size - 1 > colunas) {
+                    linha++;
+                    coluna = 1;
+                }
+
+                var top = (linha - 1) * t;
+
+                $(this).css("top", top);
+                $(this).css("left", 0);
+
+                coluna += size;
+            });
+
+            setTimeout(function () {
+                $(".tile, .btnAddTile").css("-webkit-transition", velocidadeAnimacao + "ms, background-color 1s");
+                Tile.PosicionarTiles();
+
+                setTimeout(function () {
+                    $(".tile, .btnAddTile").css("-webkit-transition", "");
+                }, 0);
+            }, 0);
+
+        } else {
+            $(".tile").css("-webkit-transition", "none");
+
+            Tile.PosicionarTiles();
+
+            setTimeout(function () {
+                $(".tile, .btnAddTile").css("-webkit-transition", "");
+            }, 0);
+        }
+    }
+    static PosicionarTiles(linhaBase, colunaBase, colunas) {
+        if (Config.getTilesOrientation() == "H") {
+            Tile.PosicionarTilesHorizontal(linhaBase, colunaBase, colunas);
+        } else {
+            Tile.PosicionarTilesVertical(linhaBase, colunaBase, colunas);
+        }
+    }
+    static PosicionarTilesHorizontal(linhaBase, colunaBase, colunas) {
+        //espaço ocupado por tile
+        var t = Tile.TileSize1() + 4;
+
+        if (!colunas) {
+            colunas = Tile.getColunas();
+        }
+
+        var coluna = 1;
+        var linha = 1;
+        var sizeAnterior = 0;
+
+        $(".tile[dragging!=1], .btnAddTile").each(function () {
+            var size = 1;
+
+            if ($(this).hasClass("size2"))
+                size = 2;
+
+            if (coluna + size - 1 > colunas) {
+                linha++;
+                coluna = 1;
+            }
+
+            if (coluna == colunaBase && linha == linhaBase) {
+                tileAfter = $(this);
+                coluna += dragSize;
+            } else if (size == 2 && coluna + 1 == colunaBase && linha == linhaBase) {
+                tileAfter = $(this);
+                coluna += dragSize;
+                colunaDrag--;
+            } else if (size == 2 && coluna == 1 && colunaBase == colunas && linha - 1 == linhaBase && dragSize == 1) {
+                tileAfter = $(this);
+                coluna = colunas;
+                linha--;
+            }
+
+            if (coluna + size - 1 > colunas) {
+                linha++;
+                coluna = 1;
+            }
+
+            var left = (coluna - 1) * t;
+            var top = (linha - 1) * t;
+
+            $(this).css("left", left);
+            $(this).css("top", top);
+
+            coluna += size;
+        });
+
+        $(".tile").removeClass("firstLoad");
+    }
+    static PosicionarTilesVertical(linhaBase, colunaBase, colunas) {
+        //espaço ocupado por tile
+        var t = Tile.TileSize1() + 4;
+
+        var linhas = Tile.getLinhas();
+
+        var coluna = 1;
+        var linha = 1;
+        var sizeAnterior = 0;
+
+        var width = 0;
+
+        var lista = $(".tile[dragging!=1], .btnAddTile");
+
+        var eof = false;
+        var c = 0;
+        while (!eof) {
+            var tile = lista.eq(c);
+            var size = tile.hasClass("size2") ? 2 : 1;
+
+            if (c + 1 < lista.length) {
+                var nTile = lista.eq(c + 1);
+
+                if (sizeAnterior == 2 || (size == 2 && sizeAnterior > 0)) {
+                    coluna += coluna % 2 == 0 ? -1 : 0;
+                    linha++;
+                } else if (sizeAnterior == 1 && size == 1) {
+                    coluna += coluna % 2 == 0 ? -1 : 1;
+                }
+
+
+                if ((size == 1 && dragSize == 1 && coluna == colunaBase && linha == linhaBase) ||
+                    (size == 2 && dragSize == 1 && coluna + 1 == colunaBase && linhaBase == linhaBase) ||
+                    (dragSize == 2 && (coluna + 1 == colunaBase || coluna + 1 == colunaBase + 1) && linha == linhaBase)) {
+
+                    tileAfter = tile;
+
+                    var fakeTile = $(tileDrag).clone();
+                    fakeTile.addClass("fake");
+                    fakeTile.removeAttr("dragging");
+                    fakeTile.insertBefore(tileAfter);
+
+                    Tile.PosicionarTilesVertical();
+
+                    break;
+                }
+
+
+                if (linha + 2 > linhas) {
+                    coluna += coluna % 2 == 0 ? 1 : 2;
+                    linha = 1;
+                }
+
+            } else {
+                eof = true;
+            }
+
+            sizeAnterior = size;
+
+            var top = (linha - 1) * t;
+            var left = (coluna - 1) * t;
+
+            tile.css("top", top);
+            tile.css("left", left);
+
+            c++;
+        }
+
+        $("#main").css("width", (coluna + 2) * t);
+        $(".tile").removeClass("firstLoad");
+    }
+}
+
+
+
+
+
+
+
+Tile.primeiroPosicionamento = true;
+
+
+
+
+
+
+
+
+
 
 function getFeedFromUrl(opt) {
     var url = opt.url;
@@ -465,191 +651,9 @@ function getFeedFromUrl(opt) {
 
 }
 
-Tile.PosicionarTilesPrimeiraVez = function () {
-    //espaço ocupado por tile
-    var t = Tile.TileSize1() + 4;
-
-    var colunas = Tile.getColunas();
-
-    var coluna = 1;
-    var linha = 1;
-
-    var velocidadeAnimacao = Config.getVelocidadeAnimacaoInicialTiles();
-
-    if (Config.getAnimacaoInicialTiles()) {
-        $(".tile, .btnAddTile").css("-webkit-transition", "none");
-
-        $(".tile, .btnAddTile").each(function () {
-            var size = 1;
-
-            if ($(this).hasClass("size2"))
-                size = 2;
-
-            if (coluna + size - 1 > colunas) {
-                linha++;
-                coluna = 1;
-            }
-
-            var top = (linha - 1) * t;
-
-            $(this).css("top", top);
-            $(this).css("left", 0);
-
-            coluna += size;
-        });
-
-        setTimeout(function () {
-            $(".tile, .btnAddTile").css("-webkit-transition", velocidadeAnimacao + "ms, background-color 1s");
-            Tile.PosicionarTiles();
-
-            setTimeout(function () {
-                $(".tile, .btnAddTile").css("-webkit-transition", "");
-            }, 0);
-        }, 0);
-
-    } else {
-        $(".tile").css("-webkit-transition", "none");
-
-        Tile.PosicionarTiles();
-
-        setTimeout(function () {
-            $(".tile, .btnAddTile").css("-webkit-transition", "");
-        }, 0);
-    }
-};
-
-Tile.PosicionarTiles = function (linhaBase, colunaBase, colunas) {
-    if (Config.getTilesOrientation() == "H") {
-        Tile.PosicionarTilesHorizontal(linhaBase, colunaBase, colunas);
-    } else {
-        Tile.PosicionarTilesVertical(linhaBase, colunaBase, colunas);
-    }
-};
-
-Tile.PosicionarTilesHorizontal = function (linhaBase, colunaBase, colunas) {
-    //espaço ocupado por tile
-    var t = Tile.TileSize1() + 4;
-
-    if (!colunas) {
-        colunas = Tile.getColunas();
-    }
-
-    var coluna = 1;
-    var linha = 1;
-    var sizeAnterior = 0;
-
-    $(".tile[dragging!=1], .btnAddTile").each(function () {
-        var size = 1;
-
-        if ($(this).hasClass("size2"))
-            size = 2;
-
-        if (coluna + size - 1 > colunas) {
-            linha++;
-            coluna = 1;
-        }
-
-        if (coluna == colunaBase && linha == linhaBase) {
-            tileAfter = $(this);
-            coluna += dragSize;
-        } else if (size == 2 && coluna + 1 == colunaBase && linha == linhaBase) {
-            tileAfter = $(this);
-            coluna += dragSize;
-            colunaDrag--;
-        } else if (size == 2 && coluna == 1 && colunaBase == colunas && linha - 1 == linhaBase && dragSize == 1) {
-            tileAfter = $(this);
-            coluna = colunas;
-            linha--;
-        }
-
-        if (coluna + size - 1 > colunas) {
-            linha++;
-            coluna = 1;
-        }
-
-        var left = (coluna - 1) * t;
-        var top = (linha - 1) * t;
-
-        $(this).css("left", left);
-        $(this).css("top", top);
-
-        coluna += size;
-    });
-
-    $(".tile").removeClass("firstLoad");
-};
-
-Tile.PosicionarTilesVertical = function (linhaBase, colunaBase, colunas) {
-    //espaço ocupado por tile
-    var t = Tile.TileSize1() + 4;
-
-    var linhas = Tile.getLinhas();
-
-    var coluna = 1;
-    var linha = 1;
-    var sizeAnterior = 0;
-
-    var width = 0;
-
-    var lista = $(".tile[dragging!=1], .btnAddTile");
-
-    var eof = false;
-    var c = 0;
-    while (!eof) {
-        var tile = lista.eq(c);
-        var size = tile.hasClass("size2") ? 2 : 1;
-
-        if (c + 1 < lista.length) {
-            var nTile = lista.eq(c + 1);
-
-            if (sizeAnterior == 2 || (size == 2 && sizeAnterior > 0)) {
-                coluna += coluna % 2 == 0 ? -1 : 0;
-                linha++;
-            } else if (sizeAnterior == 1 && size == 1) {
-                coluna += coluna % 2 == 0 ? -1 : 1;
-            }
 
 
-            if ((size == 1 && dragSize == 1 && coluna == colunaBase && linha == linhaBase) ||
-                (size == 2 && dragSize == 1 && coluna + 1 == colunaBase && linhaBase == linhaBase) ||
-                (dragSize == 2 && (coluna + 1 == colunaBase || coluna + 1 == colunaBase + 1) && linha == linhaBase)) {
 
-                tileAfter = tile;
-
-                var fakeTile = $(tileDrag).clone();
-                fakeTile.addClass("fake");
-                fakeTile.removeAttr("dragging");
-                fakeTile.insertBefore(tileAfter);
-
-                Tile.PosicionarTilesVertical();
-
-                break;
-            }
-
-
-            if (linha + 2 > linhas) {
-                coluna += coluna % 2 == 0 ? 1 : 2;
-                linha = 1;
-            }
-
-        } else {
-            eof = true;
-        }
-
-        sizeAnterior = size;
-
-        var top = (linha - 1) * t;
-        var left = (coluna - 1) * t;
-
-        tile.css("top", top);
-        tile.css("left", left);
-
-        c++;
-    }
-
-    $("#main").css("width", (coluna + 2) * t);
-    $(".tile").removeClass("firstLoad");
-};
 
 function RecalcularTamanho(pct) {
     $(".tile .fullTile").css("-webkit-animation-name", "none");

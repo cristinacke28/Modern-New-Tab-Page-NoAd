@@ -1328,10 +1328,7 @@ function processaImagem(img, callback) {
     imgProcessada.onload = function() {
         callback(imgProcessada, img);
     };
-    // remove transparent pixels, credit: Remy Sharp https://gist.github.com/remy/784508
-    canvas2 = document.createElement('canvas');
-    copy = canvas2.getContext('2d');
-    pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
     var l = pixels.data.length;
     var i;
     bound = {
@@ -1371,16 +1368,7 @@ function processaImagem(img, callback) {
             }
         }
     }
-
- var trimHeight = bound.bottom - bound.top,
-     trimWidth = bound.right - bound.left,
-     trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
-
- copy.canvas.width = trimWidth;
- copy.canvas.height = trimHeight;
- copy.putImageData(trimmed, 0, 0);
-
-    imgProcessada.src = canvas2.toDataURL("image/png");
+    imgProcessada.src = canvas.toDataURL("image/png");
 }
 
 function translate() {
