@@ -222,7 +222,7 @@ function htmlListaBookmarks(lista, ul) {
             li.click(function (e) {
                 var sublist = $(this).find("ul").eq(0);
                 sublist.find('> li img').each(function () {
-                    if (this.src == 'about:blank')
+                    if (this.src == '#')
                         this.src = $(this).attr('data-src');
                 });
                 sublist.animate({ height: 'toggle' }, 200);
