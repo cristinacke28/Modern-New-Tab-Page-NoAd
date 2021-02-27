@@ -1321,7 +1321,6 @@ function processaImagem(img, callback) {
 
     canvas.width = width;
     canvas.height = height;
-    // var ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0, width, height);
 
     var imgProcessada = new Image();
