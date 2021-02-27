@@ -59,7 +59,7 @@ function pesquisa(query) {
         });
 
         console.log("buscado");
-    })
+    });
 }
 
 function pesquisaTiles() { }

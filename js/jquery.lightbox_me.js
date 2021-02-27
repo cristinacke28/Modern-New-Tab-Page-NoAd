@@ -70,7 +70,7 @@
                 fadeIn($self, opts.lightboxSpeed, selfCSS, function () {
                     setOverlayHeight(); 
                     setSelfPosition(); 
-                    opts.onLoad()
+                    opts.onLoad();
                 });
             } else {
                 setSelfPosition();
@@ -207,7 +207,7 @@
                         position: 'fixed', 
                         top: '50%', 
                         marginTop: ($self.outerHeight() / 2) * -1
-                    })
+                    });
                 } else {
                     $self.css({ position: 'fixed'}).css(opts.modalCSS);
                 }
@@ -247,6 +247,6 @@
         zIndex: 999,
         centered: false,
         modalCSS: {top: '40px'},
-        overlayCSS: {background: 'black', opacity: .4}
-    }
+        overlayCSS: {background: 'black', opacity: 0.4}
+    };
 })(jQuery);

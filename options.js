@@ -2,7 +2,7 @@
 var allLoaded = false;
 window.addEventListener('load', init, false);
 
-function byId(id) { return document.getElementById(id) }
+function byId(id) { return document.getElementById(id); }
 
 function init() {
 	allLoaded = true;

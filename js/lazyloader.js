@@ -38,4 +38,4 @@ queue.forEach(function (item) {
 
 window.addDependencyFunction = addDependencyFunction;
 
-})()
+})();

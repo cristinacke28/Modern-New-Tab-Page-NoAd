@@ -83,7 +83,7 @@ JFeed.prototype = {
     }
 };
 
-function JFeedItem() {};
+function JFeedItem() {}
 
 JFeedItem.prototype = {
 
@@ -99,7 +99,7 @@ JFeedItem.prototype = {
 
 function JAtom(xml) {
     this._parse(xml);
-};
+}
 
 JAtom.prototype = {
 
@@ -158,7 +158,7 @@ JAtom.prototype = {
 
 function JRss(xml) {
     this._parse(xml);
-};
+}
 
 JRss.prototype  = {
 

@@ -41,23 +41,23 @@ function Tile(tileJson) {
 
 Tile.TileSize1 = function () {
     return Math.floor(TILE_SIZE * (Tile.getTilesPct() / 100));
-}
+};
 
 Tile.TileSize2 = function () {
     return (Tile.TileSize1() * 2) + 4;
-}
+};
 
 Tile.setTilesPct = function (pct) {
     Storage.tilesSize = pct;
     RecalcularTamanho(pct);
-}
+};
 
 Tile.getTilesPct = function () {
     if (!Storage.tilesSize)
         Tile.setTilesPct(100);
 
     return Storage.tilesSize;
-}
+};
 
 Tile.getColunas = function () {
     var i = Config.getColumnNumber();
@@ -70,7 +70,7 @@ Tile.getColunas = function () {
     }
 
     return i;
-}
+};
 
 Tile.getLinhas = function () {
     var linhas = Config.getRowNumber();
@@ -111,7 +111,7 @@ Tile.getLinhas = function () {
     }
 
     return linhas;
-}
+};
 
 Tile.primeiroPosicionamento = true;
 Tile.prototype.Html = function (preview) {
@@ -225,7 +225,7 @@ Tile.prototype.Html = function (preview) {
     }
 
     return aTile[0].outerHTML;
-}
+};
 
 Tile.refreshBorder = function (aTile) {
     var pageBg = hex2rgb(corPrimaria);
@@ -277,7 +277,7 @@ Tile.Listar = function () {
     //}
 
     return _tiles;
-}
+};
 
 Tile.CarregarTiles = function () {
     //Pega todos os tiles,
@@ -332,7 +332,7 @@ Tile.CarregarTiles = function () {
     } else {
         RecalculaAnimacao();
     }
-}
+};
 
 Tile.GetTile = function (id) {
     var lista = Tile.Listar();
@@ -341,7 +341,7 @@ Tile.GetTile = function (id) {
         if (lista[i].Id == id)
             return lista[i];
     }
-}
+};
 
 Tile.SalvarOrdenacao = function () {
     var lista = Tile.Listar();
@@ -362,7 +362,7 @@ Tile.SalvarOrdenacao = function () {
 
     Storage.tiles = listaNova;
     _tiles = new Array();
-}
+};
 
 Tile.prototype.Salvar = function () {
     var tiles = Tile.Listar();
@@ -391,7 +391,7 @@ Tile.prototype.Salvar = function () {
     }
 
     Storage.tiles = tiles;
-}
+};
 
 Tile.prototype.Remover = function () {
     var lista = Tile.Listar();
@@ -407,7 +407,7 @@ Tile.prototype.Remover = function () {
 
     Storage.tiles = listaNova;
     _tiles = new Array();
-}
+};
 
 Tile.GetNewId = function () {
     var id = 0;
@@ -417,7 +417,7 @@ Tile.GetNewId = function () {
     }
 
     return id + 1;
-}
+};
 
 Tile.prototype.GetLastFeed = function () {
     var tile = this;
@@ -471,7 +471,7 @@ Tile.prototype.GetLastFeed = function () {
             console.log("** Error loading feed from " + url + " - " + msg);
         }
     });
-}
+};
 
 function getFeedFromUrl(opt) {
     //var url = "http://www.theverge.com/rss/index.xml";
@@ -509,7 +509,7 @@ Tile.PosicionarTilesPrimeiraVez = function () {
         $(".tile, .btnAddTile").css("-webkit-transition", "none");
 
         $(".tile, .btnAddTile").each(function () {
-            var size = 1
+            var size = 1;
 
             if ($(this).hasClass("size2"))
                 size = 2;
@@ -545,7 +545,7 @@ Tile.PosicionarTilesPrimeiraVez = function () {
             $(".tile, .btnAddTile").css("-webkit-transition", "");
         }, 0);
     }
-}
+};
 
 Tile.PosicionarTiles = function (linhaBase, colunaBase, colunas) {
     if (Config.getTilesOrientation() == "H") {
@@ -553,7 +553,7 @@ Tile.PosicionarTiles = function (linhaBase, colunaBase, colunas) {
     } else {
         Tile.PosicionarTilesVertical(linhaBase, colunaBase, colunas);
     }
-}
+};
 
 Tile.PosicionarTilesHorizontal = function (linhaBase, colunaBase, colunas) {
     //espaço ocupado por tile
@@ -568,7 +568,7 @@ Tile.PosicionarTilesHorizontal = function (linhaBase, colunaBase, colunas) {
     var sizeAnterior = 0;
 
     $(".tile[dragging!=1], .btnAddTile").each(function () {
-        var size = 1
+        var size = 1;
 
         if ($(this).hasClass("size2"))
             size = 2;
@@ -606,7 +606,7 @@ Tile.PosicionarTilesHorizontal = function (linhaBase, colunaBase, colunas) {
     });
 
     $(".tile").removeClass("firstLoad");
-}
+};
 
 Tile.PosicionarTilesVertical = function (linhaBase, colunaBase, colunas) {
     //espaço ocupado por tile
@@ -683,7 +683,7 @@ Tile.PosicionarTilesVertical = function (linhaBase, colunaBase, colunas) {
 
     $("#main").css("width", (coluna + 2) * t);
     $(".tile").removeClass("firstLoad");
-}
+};
 
 function RecalcularTamanho(pct) {
     $(".tile .fullTile").css("-webkit-animation-name", "none");
@@ -723,7 +723,7 @@ function EnableSort() {
         $(".tile").draggable({
             distance: 15,
             scroll: false,
-            opacity: .9,
+            opacity: 0.9,
             zIndex: 100,
             start: dragStart,
             drag:  drag,
@@ -756,7 +756,7 @@ function dragStart(e, ui) {
 
     onDraggableScroll = function () {
         draggableScrollTop = $tileDom.parent().scrollTop();
-    }
+    };
     $("#main").on('scroll', onDraggableScroll);
 
     var t = Tile.TileSize1() + 4;
@@ -840,7 +840,7 @@ function dragStop(e, ui) {
         ui.helper.css("-webkit-transition", "");
         ui.helper.css('left', left + draggableOffset.left);
         ui.helper.css('top',  top  + draggableOffset.top - draggableScrollTop);
-    }, 1)
+    }, 1);
 
     // revert animation end
     ui.helper.on('webkitTransitionEnd', function callback() {
@@ -973,12 +973,11 @@ function TileEvents() {
 
             resizeMain(true);
         }
-        catch (e) {
-            console.log(e);
+        catch (err) {
+            console.log(err);
         }
         return false;
     });
-
     $(".main").on("click", ".tile .edit", function (e) {
         ConfigTile($(e.target).closest('.tile').data("id"));
         return false;
@@ -1021,7 +1020,7 @@ function ConfigTile(id) {
     $("#txtUrl").unbind("blur");
     $("#txtUrl").blur(function () {
 
-        var val = $(this).val()
+        var val = $(this).val();
         if (val != urlAtual) {
             tileAtual.Imagem = null;
             tileAtual.Url = val;
@@ -1268,7 +1267,7 @@ function ConfigTile(id) {
                                 setTileImagem(imagemProcessada);
                                 CarregaInfoTile();
                             });
-                        }
+                        };
 
                         img.src = e.target.result;
                     };
@@ -1290,7 +1289,7 @@ function ConfigTile(id) {
                     setTileImagem(imagemProcessada);
                     CarregaInfoTile();
                 });
-            }
+            };
 
             img.src = $("#txtImageUrl").val();
 
@@ -1322,7 +1321,7 @@ function ConfigTile(id) {
                     setTileImagem(imagemProcessada);
                     CarregaInfoTile();
                 });
-            }
+            };
             img.src = this.src;
 
             $(".imageList").trigger("close");
@@ -1378,10 +1377,10 @@ function ConfigTile(id) {
             msg += chrome.i18n.getMessage("tc_alert_url_name");
         }
         else if ($("#txtNome").val() == "") {
-            msg += chrome.i18n.getMessage("tc_alert_name")
+            msg += chrome.i18n.getMessage("tc_alert_name");
         }
         else if ($("#txtUrl").val() == "") {
-            msg += chrome.i18n.getMessage("tc_alert_url")
+            msg += chrome.i18n.getMessage("tc_alert_url");
         }
 
         if (msg != "") {
@@ -1531,7 +1530,7 @@ function Resize(seletor, propriedade, medida, pct) {
 
 function RecalculaAnimacao() {
     var lastSheet = document.styleSheets[document.styleSheets.length - 1];
-    var newName = "animaTileNew" //+ Tile.TileSize1();
+    var newName = "animaTileNew";
 
     if (findKeyframesRule(newName) == null) {
         var css = "@-webkit-keyframes " + newName + " { " +
@@ -1716,7 +1715,7 @@ function getLuma(rgb) {
 
 function rgbToHsl(rgb) {
     var r = rgb.r, g = rgb.g, b = rgb.b;
-    r /= 255, g /= 255, b /= 255;
+    r /= 255; g /= 255; b /= 255;
     var max = Math.max(r, g, b), min = Math.min(r, g, b);
     var h, s, l = (max + min) / 2;
 

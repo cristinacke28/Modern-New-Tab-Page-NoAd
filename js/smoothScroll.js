@@ -10,7 +10,7 @@
                 var control = opts.target ? opts.target : this;
 
                 scroll(e, opts, control);
-            }
+            };
         });
 
         var animandoScroll = false;
@@ -44,7 +44,7 @@
                 $(control).stop().animate({ scrollTop: scrollPos }, speed, function () { animandoScroll = false; });
             }
         }
-    }
+    };
 
 
     $.fn.smoothScroll.defaults = {
@@ -52,6 +52,6 @@
         snap: false,
         speed: 400,
         target: null
-    }
+    };
 
 })(jQuery);

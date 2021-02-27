@@ -42,7 +42,7 @@ $(document).ready(function () {
         }
 
         setTimeout(load, 0);
-    }
+    };
     load();
     initWithoutBackgroundPage();
     translate();
@@ -90,24 +90,24 @@ function carregarTemas() {
     async: false,
         success: function (data) {
             var temas = data;
-      var html = "";
-      for (var i = 0; i < temas.length; i++) {
-        var divBg = $("<div></div>");
-        var divTile = $("<div></div>");
+            var html = "";
+            for (var i = 0; i < temas.length; i++) {
+                var divBg = $("<div></div>");
+                var divTile = $("<div></div>");
 
-        divBg.addClass("configColor");
-        divBg.attr("style", "background-color: " + temas[i].CorFundo);
+                divBg.addClass("configColor");
+                divBg.attr("style", "background-color: " + temas[i].CorFundo);
 
-        divTile.addClass("corTile");
-        divTile.attr("style", "background-color: " + temas[i].CorTile);
+                divTile.addClass("corTile");
+                divTile.attr("style", "background-color: " + temas[i].CorTile);
 
-        divBg.append(divTile);
+                divBg.append(divTile);
 
-        html += divBg[0].outerHTML;
-      }
+                html += divBg[0].outerHTML;
+            }
 
-      $(".configColor").remove();
-      $(".listaCores .configSelectedColorBg").after(html);
+            $(".configColor").remove();
+            $(".listaCores .configSelectedColorBg").after(html);
 
             //Tema
             $(".temas .configColor").unbind("click");
@@ -161,20 +161,20 @@ function carregarUltimasAbas() {
                 li.click(function () {
                     var url = $(this).find("a").attr("href");
                     if (e.which == 1) {
-                      window.location = url;
-                      return false;
+                        window.location = url;
+                        return false;
                     } else if (e.which == 2) {
-                      chrome.tabs.create({
-                        url: url,
-                        active: false
-                      });
-                      return false;
+                        chrome.tabs.create({
+                            url: url,
+                            active: false
+                        });
+                        return false;
                     }
                 });
 
                 ul.append(li);
             });
-        })
+        });
     }
 }
 
@@ -211,7 +211,7 @@ function htmlListaBookmarks(lista, ul) {
         // loading other icons is delayed to stay fast
         else {
             img.attr("data-src", iconSrc);
-            img.attr("src", "about:blank");
+            img.attr("src", "#");
         }
 
         a.attr("href", favorito.url);
@@ -257,14 +257,14 @@ function htmlListaBookmarks(lista, ul) {
             li.click(function (e) {
                 var url = $(this).find("a").attr("href");
                 if (e.which == 1) {
-                  window.location = url;
-                  return false;
+                    window.location = url;
+                    return false;
                 } else if (e.which == 2) {
-                  chrome.tabs.create({
-                    url: url,
-                    active: false
-                  });
-                  return false;
+                    chrome.tabs.create({
+                        url: url,
+                        active: false
+                    });
+                    return false;
                 }
             });
         }
@@ -302,8 +302,7 @@ function setCores(corPrimaria, corSecundaria, corFonte) {
     //$(".selectedConfigColor").css("border", "1px solid " + corFonte);
 
     //configEvents();
-    $(".tile").each(function(){ Tile.refreshBorder($(this)) });
-
+    $(".tile").each(function(){ Tile.refreshBorder($(this)); });
     $(".temas .configSelectedColorBg").css("background-color", corPrimaria);
     $(".temas .configSelectedColorTile").css("background-color", corSecundaria);
 }
@@ -875,7 +874,7 @@ function carregarBackground() {
             $("#txtOpacity").val(background.Opacity);
         } else {
             bg.css("opacity", 1);
-            $("#txtOpacity").val(.8);
+            $("#txtOpacity").val(0.8);
         }
 
         if (background.NoRepeat) {
@@ -936,7 +935,7 @@ function navigationEvents() {
         var wJanela = $(window).width();
         var wMain = $("#main").width() + $("#main").offset().left;
 
-        $(".main").removeClass("pausado")
+        $(".main").removeClass("pausado");
 
         $(".goRight").hide();
         $(".goLeft").show();
@@ -950,7 +949,7 @@ function navigationEvents() {
     $(".goLeft").click(function () {
         var wJanela = $(window).width();
 
-        $(".main").removeClass("pausado")
+        $(".main").removeClass("pausado");
 
         $(".goRight").show();
         $(".goLeft").hide();
@@ -965,11 +964,11 @@ function navigationEvents() {
 function carregarAppsButton() {
     if (Config.getShowAppsSeparatePage()) {
         $("#mainApps, .goRight").css("display", "");
-        $(".footer #divApps").css("display", "none")
+        $(".footer #divApps").css("display", "none");
 
         $("#mainApps").html("");
     } else {
-        $("#mainApps, .goLeft, .goRight").css("display", "none") //.hide();
+        $("#mainApps, .goLeft, .goRight").css("display", "none"); //.hide();
         $(".footer #divApps").css("display", "");
 
         $(".footer #divApps .appList").html("");
@@ -1005,12 +1004,12 @@ function carregarApps() {
             }
 
         }
-    }
+    };
 
     //app da chrome store
     chrome.management.get("ahfgeienlihckogmohjhadlkjgocpleb", function (app) {
         addApp(app);
-    })
+    });
 
     //apps instalados
     var apps = chrome.management.getAll(function (apps) {
@@ -1040,7 +1039,7 @@ function windowResize() {
     if (primeiroResize) {
         primeiroResize = false;
     } else {
-        $(".main").removeClass("pausado")
+        $(".main").removeClass("pausado");
     }
 
     resizeMain(true);
@@ -1278,7 +1277,7 @@ function hex2rgb(hex) {
         r: parseInt(triplets[0], 16),
         g: parseInt(triplets[1], 16),
         b: parseInt(triplets[2], 16)
-    }
+    };
 }
 
 function verificaVersao() {
@@ -1327,7 +1326,7 @@ function processaTile(tiles, i) {
                 if (i + 1 < tiles.length)
                     processaTile(tiles, i + 1);
             });
-        }
+        };
 
         img.src = tile.Imagem;
     } else if (i + 1 < tiles.length) {
@@ -1365,7 +1364,7 @@ function processaImagem(img, callback) {
 
     imgProcessada.onload = function() {
         callback(imgProcessada, img);
-    }
+    };
     // remove transparent pixels, credit: Remy Sharp https://gist.github.com/remy/784508
     canvas2 = document.createElement('canvas');
     copy = canvas2.getContext('2d');

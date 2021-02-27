@@ -260,7 +260,7 @@ MNTPStorage = {
             localStorage.footerPosition = value;
         }
     }
-}
+};
 
 MNTPStorage.Clear = function () {
     localStorage.clear();
@@ -280,7 +280,7 @@ MNTPStorage.Clear = function () {
     _showBookmarks = null;
     _footerPosition = null;
 
-}
+};
 
 MNTPStorage.Load = function (data) {
     var s = JSON.parse(data);
@@ -310,7 +310,7 @@ MNTPStorage.Load = function (data) {
         MNTPStorage.showBookmarks = s.showBookmarks;
         MNTPStorage.footerPosition = s.footerPosition;
     }
-}
+};
 
 function saveDataToFile(data, fileName, callback) {
     window.webkitRequestFileSystem(window.TEMPORARY, data.length, function (fs) {
@@ -346,7 +346,7 @@ function dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
 
     // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
     // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
@@ -360,7 +360,7 @@ function dataURItoBlob(dataURI) {
     //bb.append(ab);
     //return bb.getBlob(mimeString);
     return new Blob([ab]);
-};
+}
 
 function errorHandler(e) {
     var msg = '';
@@ -384,7 +384,7 @@ function errorHandler(e) {
         default:
             msg = 'Unknown Error';
             break;
-    };
+    }
 
     console.log('Error: ' + msg);
 }
