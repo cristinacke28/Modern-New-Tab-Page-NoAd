@@ -204,6 +204,7 @@ a {
             color: inherit;
             margin: 7.5% 7.5%;
             text-align: center;
+            background-size: contain;
         }
 
         .tile.size1 .fullTile .tileImg {
