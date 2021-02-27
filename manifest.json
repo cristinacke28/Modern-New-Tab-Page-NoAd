@@ -28,7 +28,6 @@
   "background": {
     "page": "background.html"
   },
-  "options_page": "options.html",
   "default_locale": "en_US",
   "manifest_version": 2
 }
