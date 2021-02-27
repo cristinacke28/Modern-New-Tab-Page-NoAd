@@ -1,4 +1,4 @@
-﻿/// <reference path="Storage.js" />
+﻿/// <reference path="MNTPStorage.js" />
 /// <reference path="main.js" />
 
 function Config() { }

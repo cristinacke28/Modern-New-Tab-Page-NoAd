@@ -1,5 +1,5 @@
 ﻿/// <reference path="Config.js" />
-/// <reference path="Storage.js" />
+/// <reference path="MNTPStorage.js" />
 /// <reference path="jquery.min.js" />
 
 //Método de instância usa o prototype
