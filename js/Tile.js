@@ -1,6 +1,6 @@
 ﻿/// <reference path="Config.js" />
 /// <reference path="Storage.js" />
-/// <reference path="jquery-3.4.1.js" />
+/// <reference path="jquery.min.js" />
 
 //Método de instância usa o prototype
 //Método static não usa prototype
