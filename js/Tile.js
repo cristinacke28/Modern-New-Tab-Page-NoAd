@@ -242,7 +242,6 @@ Tile.refreshBorder = function (aTile) {
 
 Tile.Listar = function () {
     var tilesJson;
-
     //Se tiver no local storage pega do local storage
     if (Storage.tiles) {
         tilesJson = Storage.tiles;
