@@ -69,7 +69,7 @@ function carregarTemas() {
     $.ajax({
         type: "GET",
         url: "json/temas.json",
-    async: true,
+        async: true,
         success: function (data) {
             var temas = data;
             var html = "";
