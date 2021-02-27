@@ -10,7 +10,7 @@ Forked from [here](https://github.com/eaufavor/Modern-New-Tab-Page-NoAd) and upd
 5. Drag the .crx file from the parent directory on chrome://extensions/ page to install.
 
 ## Install using .crx file
-1. Download the latest build from [here](https://github.com/iBreakEverything/MNTP-Reloaded/releases/download/latest/MNTP-Reloaded.crx).
+1. Download the latest build from [here](https://github.com/iBreakEverything/MNTP-Reloaded/releases/latest/download/MNTP-Reloaded.crx).
 2. Enable developer mode at chrome://extensions/ page.
 3. Drag the .crx file on chrome://extensions/ page to install.
 
