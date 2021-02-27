@@ -251,7 +251,7 @@ Tile.Listar = function () {
         $.ajax({
             type: "GET",
             url: "json/tiles.json",
-            async: false,
+            async: true,
             success: function (data) {
                 Storage.tiles = data;
                 tilesJson = data;
