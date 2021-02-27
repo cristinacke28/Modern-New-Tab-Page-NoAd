@@ -816,7 +816,7 @@ input[type=button]:active {
 
                 .configTile .preview .previewTile .fullTile .tileImg {
                     height: 119px;
-                    background-size: 93px;
+                    background-size: contain;
                     background-repeat: no-repeat;
                     background-position: center;
                 }
