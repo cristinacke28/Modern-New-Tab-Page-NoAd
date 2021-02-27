@@ -654,7 +654,7 @@ Tile.PosicionarTilesVertical = function (linhaBase, colunaBase, colunas) {
 function RecalcularTamanho(pct) {
     $(".tile .fullTile").css("-webkit-animation-name", "none");
 
-    Resize(".tile .fullTile .tileImg", "height", "px", pct*0.7);
+    Resize(".tile .fullTile .tileImg", "height", "px", pct);
     Resize(".tile .fullTile .feed", "height", "px", pct);
     Resize(".tile .fullTile .feed h2", "font-size", "px", pct);
     Resize(".tile .fullTile .feed h2", "height", "px", pct);

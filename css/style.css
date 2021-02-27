@@ -169,7 +169,7 @@ a {
     }
 
         .tile .fullTile .tileImg {
-            height: 140px;
+            height: 98px;
             background-repeat: no-repeat;
             background-position: center;
             color: inherit;
@@ -260,7 +260,7 @@ a {
         font-size: 27px;
         text-align: center;
         overflow: hidden;
-        line-height: 140px;
+        line-height: 4.1em;
         margin: 0px;
         opacity: .9;
         -webkit-transition: background-color 0.2s;
