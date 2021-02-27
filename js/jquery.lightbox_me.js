@@ -63,7 +63,7 @@
             ---------------------------------------------------- */
             if (opts.showOverlay) {
                 var overlayOpts = { opacity: opts.overlayCSS.opacity };
-                fadeIn($overlay, opts.overlaySpeed, overlayOpts)
+                fadeIn($overlay, opts.overlaySpeed, overlayOpts);
                 setSelfPosition(); 
                 $self.css('-webkit-transform', 'scale(.5)');
                 var selfCSS = { '-webkit-transform': 'scale(1)' };
@@ -123,7 +123,7 @@
                 el.on('webkitTransitionEnd', function () {
                     el.off('webkitTransitionEnd');
                     el.css('-webkit-transition', '');
-                    callback && callback();
+                    if(callback) { callback(); }
                 });
                 setTimeout(function () {
                     el.css('-webkit-transition', 'all ' + delay + 'ms');
@@ -135,7 +135,7 @@
                     el.off('webkitTransitionEnd');
                     el.css('-webkit-transition', '');
                     el.css('display', 'none');
-                    callback && callback();
+                    if(callback) { callback(); }
                 });
                 el.css('-webkit-transition', 'all ' + delay + 'ms');
                 el.css('opacity', '0');

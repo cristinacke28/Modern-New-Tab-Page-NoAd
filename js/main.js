@@ -2,13 +2,6 @@
 /// <reference path="MNTPStorage.js" />
 /// <reference path="Tile.js" />
 
-window.console || (window.console = {});
-console.profile || (console.profile = function(){});
-console.profileEnd || (console.profileEnd = function(){});
-var mainstart = +new Date;
-var gdebug;
-
-
 var Storage;
 
 var corPrimaria = "#DDDDDD";
@@ -33,10 +26,6 @@ $(document).ready(function () {
                 carregarTudo();
                 verificaVersao();
 
-                //var gend = +new Date;
-                //document.body.innerHTML += 'bg ready:' + (bgready - gstart)  + '<br>' ;
-                //document.body.innerHTML += 'init:' + (gend - bgready) ;
-                //document.body.innerHTML += gdebug;
                 return;
             }
         }
@@ -78,8 +67,6 @@ function carregarTudo() {
     setTimeout(carregarApps, 100);
     setTimeout(carregarUltimasAbas, 100);
     setTimeout(carregarTemas, 100);
-
-    //$("*").disableSelection();
 }
 
 function carregarTemas() {
@@ -182,7 +169,6 @@ function carregarBookmarks() {
     if (Config.getShowBookmarks()) {
         chrome.bookmarks.getTree(function (e) {
             var lista = e[0].children;
-            //var barraFavoritos = lista[0].children;
 
             var ul = $("#ulBookmarks");
             ul.html("");
@@ -190,7 +176,7 @@ function carregarBookmarks() {
             htmlListaBookmarks(lista, ul);
 
             ul.find("li.pasta:first-child ul").eq(0).show();
-        })
+        });
     }
 }
 
@@ -200,9 +186,7 @@ function htmlListaBookmarks(lista, ul) {
         var img = $("<img height='16' width='16'></img>");
         var a = $("<a></a>");
 
-        var iconSrc = favorito.url
-                        ? "chrome://favicon/size/16@1x/" + favorito.url
-                        : 'imgs/bookmarks/folder-mac.png';
+        var iconSrc = favorito.url ? "chrome://favicon/size/16@1x/" + favorito.url : 'imgs/bookmarks/folder-mac.png';
 
         // bookmarks bar icons are loaded instantly
         if (favorito.parentId < 2) {
@@ -241,8 +225,6 @@ function htmlListaBookmarks(lista, ul) {
             li.addClass("pasta");
 
             li.click(function (e) {
-                //e.preventDefault();
-                //if (this != e.target) return true;
                 var sublist = $(this).find("ul").eq(0);
                 sublist.find('> li img').each(function () {
                     if (this.src == 'about:blank')
@@ -274,7 +256,7 @@ function htmlListaBookmarks(lista, ul) {
 }
 
 function salvarTemaPadrao(corPrimaria, corSecundaria, corFonte) {
-    var temaPadrao = new Object();
+    var temaPadrao = {};
     temaPadrao.corPrimaria = corPrimaria;
     temaPadrao.corSecundaria = corSecundaria;
     temaPadrao.corFonte = corFonte;
@@ -296,12 +278,6 @@ function setCores(corPrimaria, corSecundaria, corFonte) {
 
     $(".BGColor").css("background-color", corPrimaria);
     $(".tileColor").css("background-color", corSecundaria);
-
-    //$("a, span, input, h2").css("color", corFonte);
-    //$("input, .configTile, .imageList, .imageUrl, .colorConfig").css("border-color", corFonte);
-    //$(".selectedConfigColor").css("border", "1px solid " + corFonte);
-
-    //configEvents();
     $(".tile").each(function(){ Tile.refreshBorder($(this)); });
     $(".temas .configSelectedColorBg").css("background-color", corPrimaria);
     $(".temas .configSelectedColorTile").css("background-color", corSecundaria);
@@ -829,17 +805,10 @@ function footerEvents() {
 
         return false;
     });
-
-    //$(".footer .item").on('webkitTransitionEnd', function () {
-    //    if (!$(this).hasClass("act"))
-    //        $(".footer > div[class~=secundario]").removeClass("secundario");
-
-    //    console.log("end");
-    //});
 }
 
 function salvarBackground(img) {
-    var background = new Object();
+    var background = {};
 
     if (img)
         Storage.backgroundImage = img;

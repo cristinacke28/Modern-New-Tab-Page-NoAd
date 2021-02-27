@@ -24,12 +24,12 @@ jQuery.getFeed = function(options) {
           // Handle legacy failure option
           options.error = function(xhr, msg, e){
             options.failure(msg, e);
-          }
+          };
         } else if (jQuery.type(options.failure) === jQuery.type(options.error) === 'null') {
           // Default error behavior if failure & error both unspecified
           options.error = function(xhr, msg, e){
-            window.console&&console.log('getFeed failed to load feed', xhr, msg, e);
-          }
+            console.log('getFeed failed to load feed', xhr, msg, e);
+          };
         }
 
         return jQuery.ajax({
@@ -51,7 +51,6 @@ jQuery.getFeed = function(options) {
 function JFeed(xml) {
     if (xml) this.parse(xml);
 }
-;
 
 JFeed.prototype = {
 
@@ -68,15 +67,17 @@ JFeed.prototype = {
             xml = xmlDoc;
         }
 
+        var feedClass;
+
         if (jQuery('channel', xml).length == 1) {
 
             this.type = 'rss';
-            var feedClass = new JRss(xml);
+            feedClass = new JRss(xml);
 
         } else if (jQuery('feed', xml).length == 1) {
 
             this.type = 'atom';
-            var feedClass = new JAtom(xml);
+            feedClass = new JAtom(xml);
         }
 
         if (feedClass) jQuery.extend(this, feedClass);
@@ -114,7 +115,7 @@ JAtom.prototype = {
         this.language = jQuery(channel).attr('xml:lang');
         this.updated = jQuery(channel).find('updated:first').text();
 
-        this.items = new Array();
+        this.items = [];
 
         var feed = this;
 
@@ -175,7 +176,7 @@ JRss.prototype  = {
         this.language = jQuery(channel).find('language:first').text();
         this.updated = jQuery(channel).find('lastBuildDate:first').text();
 
-        this.items = new Array();
+        this.items = [];
 
         var feed = this;
 

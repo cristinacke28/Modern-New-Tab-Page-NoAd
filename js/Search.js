@@ -1,7 +1,7 @@
-﻿var tiles = new Array();
-var apps = new Array();
-var history = new Array();
-var bookmarks = new Array();
+﻿var tiles = [];
+var apps = [];
+var history = [];
+var bookmarks = [];
 
 $(document).ready(function () {
     $("#txtSearch").keydown(function () {

@@ -5,7 +5,7 @@
 //Método de instância usa o prototype
 //Método static não usa prototype
 
-var _tiles = new Array();
+var _tiles = [];
 var TILES = "tiles";
 var ORDEM = "ordem";
 var TILES_PCT = "tilesSize";
@@ -102,9 +102,6 @@ Tile.getLinhas = function () {
             var t = Tile.TileSize1() + 4;
             var h = window.innerHeight;
             var sobra = 50;
-
-            //console.log(h);
-
             linhas = Math.floor((h - sobra) / t);
             linhas++;
         }
@@ -245,7 +242,7 @@ Tile.refreshBorder = function (aTile) {
         var border = brightBorderColorFromBackground(tileBg);
     border = "rgb(" + [border.r, border.g, border.b].join(',') + ')';
     aTile.css("border", "1px solid " + border);
-}
+};
 
 Tile.Listar = function () {
     var tilesJson;
@@ -256,7 +253,6 @@ Tile.Listar = function () {
     }
         //Se não, pega via ajax
     else {
-
         $.ajax({
             type: "GET",
             url: "json/tiles.json",
@@ -345,7 +341,7 @@ Tile.GetTile = function (id) {
 
 Tile.SalvarOrdenacao = function () {
     var lista = Tile.Listar();
-    var listaNova = new Array();
+    var listaNova = [];
     var c = 0;
 
     $(".tile").each(function () {
@@ -353,7 +349,7 @@ Tile.SalvarOrdenacao = function () {
 
         var id = $(this).data("id");
 
-        var tile = lista.filter(function (t) { return t.Id == id })[0];
+        tile = lista.filter(function (t) { return t.Id == id; })[0];
 
         listaNova[c] = tile;
 
@@ -361,7 +357,7 @@ Tile.SalvarOrdenacao = function () {
     });
 
     Storage.tiles = listaNova;
-    _tiles = new Array();
+    _tiles = [];
 };
 
 Tile.prototype.Salvar = function () {
@@ -395,7 +391,7 @@ Tile.prototype.Salvar = function () {
 
 Tile.prototype.Remover = function () {
     var lista = Tile.Listar();
-    var listaNova = new Array();
+    var listaNova = [];
     var c = 0;
 
     for (var i = 0; i < lista.length; i++) {
@@ -406,7 +402,7 @@ Tile.prototype.Remover = function () {
     }
 
     Storage.tiles = listaNova;
-    _tiles = new Array();
+    _tiles = [];
 };
 
 Tile.GetNewId = function () {
@@ -423,24 +419,16 @@ Tile.prototype.GetLastFeed = function () {
     var tile = this;
     var url = this.RssUrl;
 
-    //console.log("Pegando feed de " + this.Nome + " - " + this.RssUrl);
-
     getFeedFromUrl({
         url: url,
         success: function (feed) {
-            var noticia = new Object();
+            var noticia = {};
 
             if (feed.items.length > 0) {
                 tile.LastFeedTitle = feed.items[0].title;
                 tile.LastFeedUrl = feed.items[0].link;
                 tile.Salvar();
             }
-
-            //console.log("----------");
-            //console.log("feed de " + tile.Nome + ":");
-            //console.log(tile.LastFeedTitle);
-            //console.log(tile.LastFeedUrl);
-            //console.log(feed);
 
             var tileDom = $(".tile[data-id=" + tile.Id + "]");
             var pFeed = tileDom.find(".feed p");
@@ -620,12 +608,7 @@ Tile.PosicionarTilesVertical = function (linhaBase, colunaBase, colunas) {
 
     var width = 0;
 
-    //console.log("LinhaBase: " + linhaBase);
-    //console.log("ColunaBase: " + colunaBase);
-
     var lista = $(".tile[dragging!=1], .btnAddTile");
-
-    console.log(lista);
 
     var eof = false;
     var c = 0;
@@ -689,9 +672,6 @@ function RecalcularTamanho(pct) {
     $(".tile .fullTile").css("-webkit-animation-name", "none");
 
     Resize(".tile .fullTile .tileImg", "height", "px", pct*0.7);
-    //Resize(".tileImg", "height", "px", pct*0.7);
-    //Resize(".tileImg", "width", "px", pct*0.8);
-    //Resize(".tile .fullTile .tileImg", "background-size", "px", pct);
     Resize(".tile .fullTile .feed", "height", "px", pct);
     Resize(".tile .fullTile .feed h2", "font-size", "px", pct);
     Resize(".tile .fullTile .feed h2", "height", "px", pct);
@@ -705,10 +685,7 @@ function RecalcularTamanho(pct) {
     $(".tile.size1").css("width", Tile.TileSize1() + "px");
     $(".tile.size2").css("width", Tile.TileSize2() + "px");
     $(".tile").css("height", Tile.TileSize1() + "px");
-    //$(".tile").css("zoom", pct/100);
 
-    //$(".tile p.tileNameP").css("line-height", 140*pct/100 + 'px');
-    //$(".tile p.tileNameP").css("top", Math.floor((Tile.TileSize1() - 37 * pct / 100)) + "px");
 
     RecalculaAnimacao();
 
@@ -862,8 +839,8 @@ function AnimaTiles() {
         return $(tile).data("id");
     });
 
-    var ordemAnimacao = new Array();
-    var indexRepetidos = new Array();
+    var ordemAnimacao = [];
+    var indexRepetidos = [];
     var qtdTiles = listaIds.length;
 
     //Define uma ordem aleatória
@@ -917,20 +894,6 @@ function AnimaTile(tile) {
 }
 
 function TileEvents() {
-    /*
-    // tile permanent active state
-    $(".tile").mouseup(function (e) {
-        if (e.which != 1) return true; // only left click
-        if ($(e.target).is('.resize, .edit') || $(this).is('.ui-draggable-dragging'))
-            $(this).removeClass('hover').removeClass('active');
-    });
-    $(".tile").mousedown(function (e) {
-        if (e.which != 1) return true; // only left click
-        if (!$(e.target).is('.resize, .edit'))
-            $(this).addClass('hover').addClass('active');
-    });
-    */
-
     $('.chromeUrl').each(function(i, obj) {
         return;
         obj.addEventListener("click", function(event) {
@@ -946,7 +909,7 @@ function TileEvents() {
             return;
         }
         var aDom = $(e.target).closest('.chromeUrl');
-        console.log(aDom[0].href);
+
         chrome.tabs.update(null, {url: aDom[0].href});
     });
     $(".main").on("click", ".tile .resize", function (e) {
@@ -1565,7 +1528,7 @@ function findKeyframesRule(rule) {
 }
 
 function getMetaTags(html, tags) {
-    var values = new Array();
+    var values = [];
 
     for (var i = 0; i < html.length; i++) {
         var tag = $(html[i]);
@@ -1598,7 +1561,7 @@ function getAverageRGB(imgEl) {
         data, width, height,
         i = -4,
         length,
-        cores = new Array(),
+        cores = [],
         rgb = { r: 0, g: 0, b: 0 },
         count = 0,
         transparentes = 0;
