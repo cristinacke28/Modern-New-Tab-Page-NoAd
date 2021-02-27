@@ -3,7 +3,7 @@
 
   "name": "MNTP No Ads - Updated",
   "description": "Modern New Tab Page replaces the traditional new tab page by a new beautiful and elegant one, made of customizable live tiles.",
-  "version": "2020.1.25",
+  "version": "2.0",
   "incognito": "split",
   "icons": {
 	"16":  "icon16.png",
