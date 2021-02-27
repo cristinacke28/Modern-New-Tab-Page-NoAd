@@ -61,12 +61,13 @@
             /*----------------------------------------------------
                Animate it in.
             ---------------------------------------------------- */
+            var selfCSS;
             if (opts.showOverlay) {
                 var overlayOpts = { opacity: opts.overlayCSS.opacity };
                 fadeIn($overlay, opts.overlaySpeed, overlayOpts);
                 setSelfPosition(); 
                 $self.css('-webkit-transform', 'scale(.5)');
-                var selfCSS = { '-webkit-transform': 'scale(1)' };
+                selfCSS = { '-webkit-transform': 'scale(1)' };
                 fadeIn($self, opts.lightboxSpeed, selfCSS, function () {
                     setOverlayHeight(); 
                     setSelfPosition(); 
@@ -75,7 +76,7 @@
             } else {
                 setSelfPosition();
                 $self.css('-webkit-transform', 'scale(.5)');
-                var selfCSS = { '-webkit-transform': 'scale(1)' };
+                selfCSS = { '-webkit-transform': 'scale(1)' };
                 fadeIn($self, opts.lightboxSpeed, selfCSS, opts.onLoad);
             }
 

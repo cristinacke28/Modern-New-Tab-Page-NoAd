@@ -2,18 +2,8 @@
 
     $.fn.smoothScroll = function (options) {
 
-        return this.each(function () {
-
-            var opts = $.extend({}, $.fn.smoothScroll.defaults, options);
-
-            this.onmousewheel = function (e) {
-                var control = opts.target ? opts.target : this;
-
-                scroll(e, opts, control);
-            };
-        });
-
         var animandoScroll = false;
+
         function scroll(e, opts, control) {
             e = e || window.event;
             if (e.preventDefault)
@@ -44,8 +34,18 @@
                 $(control).stop().animate({ scrollTop: scrollPos }, speed, function () { animandoScroll = false; });
             }
         }
-    };
 
+        return this.each(function () {
+
+            var opts = $.extend({}, $.fn.smoothScroll.defaults, options);
+
+            this.onmousewheel = function (e) {
+                var control = opts.target ? opts.target : this;
+
+                scroll(e, opts, control);
+            };
+        });
+    };
 
     $.fn.smoothScroll.defaults = {
         delta: null,

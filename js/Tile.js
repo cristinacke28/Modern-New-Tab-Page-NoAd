@@ -174,7 +174,7 @@ Tile.prototype.Html = function (preview) {
         // check external images
         // NOTE: might've become unnecessary cause of inline images
         if (this.Imagem.indexOf('http') == 0) {
-            var img = new Image;
+            var img = new Image();
             var self = this;
             img.onerror = function () {
                 var tile = $("#tile-" + self.Id);
@@ -226,9 +226,7 @@ Tile.prototype.Html = function (preview) {
 
 Tile.refreshBorder = function (aTile) {
     var pageBg = hex2rgb(corPrimaria);
-    var tileBg = aTile[0].style.backgroundColor
-                   ? rgb2hex(aTile[0].style.backgroundColor)
-                   : corSecundaria;
+    var tileBg = aTile[0].style.backgroundColor ? rgb2hex(aTile[0].style.backgroundColor) : corSecundaria;
     tileBg = hex2rgb(tileBg);
 
     // dark background
@@ -236,10 +234,11 @@ Tile.refreshBorder = function (aTile) {
         aTile.addClass('dark-tile-bg');
     }
     // border
+    var border;
     if (isColorHighLumen(pageBg))
-        var border = darkBorderColorFromBackground(tileBg);
+        border = darkBorderColorFromBackground(tileBg);
     else
-        var border = brightBorderColorFromBackground(tileBg);
+        border = brightBorderColorFromBackground(tileBg);
     border = "rgb(" + [border.r, border.g, border.b].join(',') + ')';
     aTile.css("border", "1px solid " + border);
 };
@@ -264,7 +263,7 @@ Tile.Listar = function () {
         });
     }
 
-    _tiles = new Array();
+    _tiles = [];
     //Transforma a lista de Json em objetos
     for (var i = 0; i < tilesJson.length; i++) {
         var tileJson = tilesJson[i];
@@ -895,13 +894,13 @@ function AnimaTile(tile) {
 
 function TileEvents() {
     $('.chromeUrl').each(function(i, obj) {
-        return;
         obj.addEventListener("click", function(event) {
             if ('edit' == event.target.className || 'resize' == event.target.className){
                 return;
             }
             chrome.tabs.update(null, {url: obj.getAttribute("chref")});
         }, false);
+        return;
     });
     $(".main").on("click", ".chromeUrl", function (e) {
         //alert(e.target.className);

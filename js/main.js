@@ -19,17 +19,12 @@ $(document).ready(function () {
         if (bgPage){
             Storage = bgPage.MNTPStorage;
             if (Storage) {
-                var bgready = +new Date;
-
                 $("#initMessage").hide();
-
                 carregarTudo();
                 verificaVersao();
-
                 return;
             }
         }
-
         setTimeout(load, 0);
     };
     load();
@@ -1075,7 +1070,7 @@ function resizeMainHorizontal(posicionar) {
     h2 = rows * tileSize;
 
     padding = h - h2;
-    var espacoL = Math.floor(padding / 2);
+    espacoL = Math.floor(padding / 2);
 
     $("#main").css("height", h2);
     $("#main").css("top", espacoL);
@@ -1162,7 +1157,7 @@ function resizeMainApps() {
     h2 = qtdL * t;
 
     sobra = h - h2;
-    var espacoL = Math.floor(sobra / 2);
+    espacoL = Math.floor(sobra / 2);
 
     $("#mainApps").css("height", h2);
     $("#mainApps").css("top", espacoL);
