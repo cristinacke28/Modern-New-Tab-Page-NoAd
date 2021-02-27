@@ -365,11 +365,11 @@ function carregarConfigs() {
 
 $.fn.clickOutside = function(callback) {
     var self = this;
-    $("body").mousedown(function (e) {
-        if (e.which != 1) return true;
-        var isInside = $(e.target).closest(self)[0];
-        if (!isInside) {
-            callback && callback.call(self, e);
+    $("body").on("mousedown", function (err) {
+        if (err.which != 1) return true;
+        var isInside = $(err.target).closest(self)[0];
+        if (!isInside && callback) {
+            callback.call(self, err);
         }
     });
 };
