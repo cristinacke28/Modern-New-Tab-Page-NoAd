@@ -112,8 +112,6 @@ Tile.getLinhas = function () {
 
 Tile.primeiroPosicionamento = true;
 Tile.prototype.Html = function (preview) {
-    //var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id magna turpis, sed adipiscing magna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque neque lorem, bibendum scelerisque elementum molestie, sagittis in neque. Sed sodales lobortis lectus sed faucibus. Donec egestas rhoncus eros, ut auctor eros posuere egestas. Fusce eget nunc nec lorem vehicula sagittis nec nec ligula. Ut erat eros, lacinia at convallis a, euismod ac dui. Vivamus nibh purus, cursus eu mattis vitae, tincidunt vulputate enim.";
-
     var aTile = $("<a></a>");
     var divFullTile = $("<div class='fullTile'></div>");
     var divTileImg = $("<div class='tileImg'></div>");
@@ -142,7 +140,6 @@ Tile.prototype.Html = function (preview) {
             aTile.attr("href", url);
             aTile.attr("chref", url);
             aTile.addClass("chromeUrl");
-            //aTile.attr("onclick", 'chromeOpen(this.href);');
         }
 
         if (Tile.primeiroPosicionamento)
@@ -269,7 +266,6 @@ Tile.Listar = function () {
         var tileJson = tilesJson[i];
         _tiles.push(new Tile(tileJson));
     }
-    //}
 
     return _tiles;
 };
@@ -305,18 +301,8 @@ Tile.CarregarTiles = function () {
         }
     }, 10);
 
-
-    //Evento para trocar o css qndo termina a animação do tile
-    //$("#main .fullTile").on('webkitAnimationEnd', function () {
-    //    $(this).removeClass("animando");
-    //    $(this).addClass("pausado");
-    //});
-
     //Ativa ordenação
     setTimeout(EnableSort, 10);
-
-    //Anima os tiles
-    // setTimeout(AnimaTiles, 1500);
 
     //Eventos do tiles
     setTimeout(TileEvents, 10);
@@ -461,7 +447,6 @@ Tile.prototype.GetLastFeed = function () {
 };
 
 function getFeedFromUrl(opt) {
-    //var url = "http://www.theverge.com/rss/index.xml";
     var url = opt.url;
 
     if (url.indexOf("feedburner" > 0) && url.indexOf("fmt=xml") < 0) {
@@ -802,7 +787,6 @@ function dragStop(e, ui) {
     _linhaDrag = _linhaDrag == 0 ? 1 : _linhaDrag;
     _colunaDrag = _colunaDrag == 0 ? 1 : _colunaDrag;
 
-    //Tile.PosicionarTiles(linhaDrag, colunaDrag, null);
     Tile.PosicionarTiles();
 
     left = parseInt(ui.helper.css('left'), 10);
@@ -903,7 +887,6 @@ function TileEvents() {
         return;
     });
     $(".main").on("click", ".chromeUrl", function (e) {
-        //alert(e.target.className);
         if ('edit' == e.target.className || 'resize' == e.target.className){
             return;
         }
@@ -1261,7 +1244,6 @@ function ConfigTile(id) {
         $(".imageUrl").lightbox_me({
             centered: true,
             lightboxSpeed: 100,
-            // overlayCSS: {opacity:0},
             onLoad: function () {
                 $("#txtImageUrl").focus();
             }
@@ -1290,27 +1272,15 @@ function ConfigTile(id) {
         });
 
         $(".imageList").lightbox_me({ centered: true, lightboxSpeed: 100 });
-        /*
-        $(".imageList").lightbox_me({
-                    centered: true,
-                    lightboxSpeed: 100,
-                    overlayCSS: {opacity:0}
-        });
-        */
     });
 
     //Remover imagem
-    //if (tileAtual.Imagem) {
-    //  $("#btnRemoveImage").show();
-        $("#btnRemoveImage").unbind("click");
-        $("#btnRemoveImage").click(function () {
-            tileAtual.Imagem = null;
+    $("#btnRemoveImage").unbind("click");
+    $("#btnRemoveImage").click(function () {
+        tileAtual.Imagem = null;
 
-            CarregaInfoTile();
-        });
-    //} else {
-    //    $("#btnRemoveImage").hide();
-    //}
+        CarregaInfoTile();
+    });
 
     //Remover tile
     $(".btnRemove").unbind("click");
@@ -1481,7 +1451,6 @@ function Resize(seletor, propriedade, medida, pct) {
     $(seletor).css(propriedade, "");
 
     var valor = $(seletor).css(propriedade);
-    //document.querySelector(seletor).style.removeAttribute(propriedade);
     if (valor) {
         valor = valor.replace(medida, "");
 
@@ -1503,13 +1472,6 @@ function RecalculaAnimacao() {
 
         lastSheet.insertRule(css, lastSheet.cssRules.length);
     }
-
-
-    /*$(".tile .fullTile").each(function(){
-        if ($(this).find('.feed').length)
-            $(this).css("-webkit-animation-name", newName);
-    });*/
-
 }
 
 // search the CSSOM for a specific -webkit-keyframe rule
@@ -1577,7 +1539,6 @@ function getAverageRGB(imgEl) {
     try {
         data = context.getImageData(0, 0, width, height);
     } catch (e) {
-        ///* security error, img on diff domain */alert('x');
         return defaultRGB;
     }
 
@@ -1648,7 +1609,7 @@ function darkBorderColorFromBackground(rgb) {
 }
 function isColorBright(rgb) {
     var o = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
-    return (o > 125); // (getLuma(rgb) > 40)
+    return (o > 125);
 }
 function isColorDark(rgb) {
     var o = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;

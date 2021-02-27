@@ -3,7 +3,7 @@
     _backgroundImage,
     _background,
     _versao,
-    _tilesSize, //(tiles_PCT)
+    _tilesSize,
     _tiles,
     _animacaoInicialTiles,
     _velocidadeAnimacaoInicialTiles,
@@ -54,15 +54,8 @@ MNTPStorage = {
     },
 
     set backgroundImage(value) {
-        //if (value) {
-            //saveDataToFile(value, function (url) {
-            //    _backgroundImage = url;
-            //    localStorage.backgroundImage = url;
-            //});
-
-            _backgroundImage = value;
-            localStorage.backgroundImage = value;
-        //}
+        _backgroundImage = value;
+        localStorage.backgroundImage = value;
     },
 
     get background() {
@@ -73,10 +66,8 @@ MNTPStorage = {
     },
 
     set background(value) {
-        //if (value) {
-            _background = value;
-            localStorage.background = JSON.stringify(value);
-        //}
+        _background = value;
+        localStorage.background = JSON.stringify(value);
     },
 
     get versao() {
@@ -129,10 +120,8 @@ MNTPStorage = {
     },
 
     set animacaoInicialTiles(value) {
-        //if (value) {
-            _animacaoInicialTiles = value;
-            localStorage.animacaoInicialTiles = value;
-        //}
+        _animacaoInicialTiles = value;
+        localStorage.animacaoInicialTiles = value;
     },
 
     get velocidadeAnimacaoInicialTiles() {
@@ -157,10 +146,8 @@ MNTPStorage = {
     },
 
     set hideAddButton(value) {
-        //if (value) {
-            _hideAddButton = value;
-            localStorage.hideAddButton = value;
-        //}
+        _hideAddButton = value;
+        localStorage.hideAddButton = value;
     },
 
     get rowNumber() {
@@ -199,10 +186,8 @@ MNTPStorage = {
     },
 
     set smoothScroll(value) {
-        //if (value) {
-            _smoothScroll = value;
-            localStorage.smoothScroll = value;
-        //}
+        _smoothScroll = value;
+        localStorage.smoothScroll = value;
     },
 
     get showClosedTabs() {
@@ -213,10 +198,8 @@ MNTPStorage = {
     },
 
     set showClosedTabs(value) {
-        //if (value) {
-            _showClosedTabs = value;
-            localStorage.showClosedTabs = value;
-        //}
+        _showClosedTabs = value;
+        localStorage.showClosedTabs = value;
     },
 
     get showBookmarks() {
@@ -227,10 +210,8 @@ MNTPStorage = {
     },
 
     set showBookmarks(value) {
-        //if (value) {
-            _showBookmarks = value;
-            localStorage.showBookmarks = value;
-        //}
+        _showBookmarks = value;
+        localStorage.showBookmarks = value;
     },
 
     get showAppsSeparatePage() {
@@ -241,10 +222,8 @@ MNTPStorage = {
     },
 
     set showAppsSeparatePage(value) {
-        //if (value) {
         _showAppsSeparatePage = value;
         localStorage.showAppsSeparatePage = value;
-        //}
     },
 
     get footerPosition() {
@@ -354,11 +333,6 @@ function dataURItoBlob(dataURI) {
     for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
     }
-
-    // write the ArrayBuffer to a blob, and you're done
-    //var bb = new window.WebKitBlobBuilder(); // or just BlobBuilder() if not using Chrome
-    //bb.append(ab);
-    //return bb.getBlob(mimeString);
     return new Blob([ab]);
 }
 
@@ -401,7 +375,6 @@ if (tiles && !localStorage.updatedGmailFeed) {
     }
     MNTPStorage.tiles = tiles;
 }
-
 
 // temporary fix for preventing auth popup when logged out
 // https://code.google.com/p/chromium/issues/detail?id=31582

@@ -22,16 +22,11 @@ body {
     overflow: hidden;
     -webkit-user-select:none;
     user-select:none;
-    /*-webkit-transition: background-color 1s;*/
 }
 
 a, span, input, h2, p {
     color: white;
 }
-
-/*input {
-    border-color: white;
-}*/
 
 .clear {
     clear: both;
@@ -43,7 +38,6 @@ a {
 
 .bg {
     background-repeat: no-repeat;
-    /*background-size: 100%;*/
     position: fixed;
     top: 0;
     left: 0;
@@ -55,7 +49,6 @@ a {
 .bgTop {
     background-repeat: no-repeat;
     background-position: top;
-    /*opacity: .2;*/
     position: fixed;
     top: 0;
     left: 0;
@@ -67,7 +60,6 @@ a {
 .bgBot {
     background-repeat: no-repeat;
     background-position: bottom;
-    /*opacity: .2;*/
     position: fixed;
     bottom: 0;
     left: 0;
@@ -78,7 +70,6 @@ a {
 .goLeft {
     position: absolute;
     left: 0;
-    /*top: 25%;*/
     height: 99%;
     width: 80px;
     cursor: pointer;
@@ -95,7 +86,6 @@ a {
 .goRight {
     position: absolute;
     right: 0;
-    /*top: 25%;*/
     height: 99%;
     width: 80px;
     cursor: pointer;
@@ -122,21 +112,6 @@ a {
     -webkit-transition-duration: .5s;
     -webkit-transition-timing-function: cubic-bezier(.27, .05, .24, 1);
 }
-
-
-/*@-webkit-keyframes animaTile140 {
-    0% {
-        top: 0px;
-    }
-
-    16.6%, 66.6% {
-        top: -140px;
-    }
-
-    83.26%, 100% {
-        top: -280px;
-    }
-}*/
 
 @-webkit-keyframes animaTilePreview {
     0%, 33.2% {
@@ -169,8 +144,6 @@ a {
 
 .tile {
     position: absolute;
-    /*top: 0px;
-    left: 0px;*/
     margin: 2px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -182,7 +155,6 @@ a {
     text-align: left;
     -webkit-transition: all .2s, background-color 0.01s;
     box-sizing:border-box;
-    /*background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));*/
 }
 
     .tile.firstLoad {
@@ -194,7 +166,6 @@ a {
         -webkit-animation-name: animaTile140;
         -webkit-animation-duration:12s;
         -webkit-animation-iteration-count: 1;
-        /*-webkit-animation-play-state: paused;*/
     }
 
         .tile .fullTile .tileImg {
@@ -238,7 +209,6 @@ a {
         margin: 1px 0 0 5px;
         font-weight: normal;
         color: inherit;
-        /*-webkit-mask-image: -webkit-gradient(linear, left top, right top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.6)));*/
     }
 
     .tile.size1 .fullTile .feed h2 {
@@ -252,7 +222,6 @@ a {
     .tile .fullTile .feed p {
         display: block;
         margin: 3px 5px 0 5px;
-        /*-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.8)));*/
         -webkit-transition-duration: 0.2s;
         -webkit-transition-timing-function: ease;
         max-height: 97px;
@@ -270,7 +239,6 @@ a {
     .tile:active, .tile.active {
         -webkit-transform:scale(0.95);
         -webkit-filter:brightness(0.95);
-        /*border: 4px solid rgba(0, 139, 255, .8) !important;*/
     }
 
         .tile:hover .resize, .tile:hover .edit, .tile:hover span {
@@ -385,7 +353,6 @@ a {
 
 .btnAddTileNew {
     cursor: pointer;
-    /*background: url('../imgs/add.png') no-repeat center;*/
     background: url(data:image/png;base64,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) no-repeat center;
     position: absolute;
     left: auto;
@@ -663,7 +630,6 @@ input[type=button]:active {
 
 .configTile {
     width: 300px;
-    /*height: 645px;*/
     padding: 0 15px 15px 15px;
     text-align: left;
     display: none;
@@ -766,8 +732,6 @@ input[type=button]:active {
         float:right;
         min-width:83px;
         font-weight: bold;
-        /*background: rgb(37, 147, 255);
-        color: #fff;*/
     }
 
         .configTile .btnSave:active {
@@ -841,7 +805,6 @@ input[type=button]:active {
             overflow: hidden;
             text-decoration: none;
             text-align: left;
-            /*background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));*/
         }
 
             .configTile .preview .previewTile .fullTile {
@@ -872,7 +835,6 @@ input[type=button]:active {
                         overflow: hidden;
                         margin: 1px 0 0 5px;
                         font-weight: normal;
-                       /*-webkit-mask-image: -webkit-gradient(linear, left top, right top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.6)));*/
                         width: 279px;
                         color: inherit;
                     }
@@ -880,7 +842,6 @@ input[type=button]:active {
                     .configTile .preview .previewTile .fullTile .feed p {
                         display: block;
                         margin: 3px 5px 0 5px;
-                        /*-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.8)));*/
                         max-height: 97px;
                         overflow: hidden;
                         color: inherit;
@@ -1152,7 +1113,7 @@ input[type=button]:active {
 }
 
     .footer.bottom {
-        bottom: 5px; /*5*/
+        bottom: 5px;
     }
 
         .footer.bottom.right {
@@ -1404,7 +1365,7 @@ input[type=button]:active {
     height: 6px;
 }
 
-/* fundo */
+/* Fundo */
 ::-webkit-scrollbar-track {
     -webkit-border-radius: 0px;
     border-radius: 0px;
@@ -1414,7 +1375,7 @@ input[type=button]:active {
     background-color: rgba(255,255,255,0.1);
 }
 
-/* barrinha */
+/* Barrinha */
 ::-webkit-scrollbar-thumb {
     background-color: rgba(255,255,255,0.4);
 }

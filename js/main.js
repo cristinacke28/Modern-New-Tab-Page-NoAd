@@ -932,7 +932,7 @@ function carregarAppsButton() {
 
         $("#mainApps").html("");
     } else {
-        $("#mainApps, .goLeft, .goRight").css("display", "none"); //.hide();
+        $("#mainApps, .goLeft, .goRight").css("display", "none");
         $(".footer #divApps").css("display", "");
 
         $(".footer #divApps .appList").html("");
@@ -1057,7 +1057,7 @@ function resizeMainHorizontal(posicionar) {
     var rows = 0;
     //espaço minimo q tem q sobrar de cada lado da div .main
     //(110px pra cima e pra baixo)
-    padding = 110; // 220
+    padding = 110;
 
     rows = Math.floor((h - padding) / tileSize);
     rows = rows <= 0 ? 1 : rows;
