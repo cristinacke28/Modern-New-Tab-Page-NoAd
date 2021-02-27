@@ -1,6 +1,6 @@
 ﻿/// <reference path="Config.js" />
 /// <reference path="MNTPStorage.js" />
-/// <reference path="jquery.min.js" />
+/// <reference path="libs/jquery.min.js" />
 
 //Método de instância usa o prototype
 //Método static não usa prototype

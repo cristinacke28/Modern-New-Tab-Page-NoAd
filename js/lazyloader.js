@@ -2,11 +2,11 @@
 (function () {
 
 var queue = [
-	{ lib: 'jquery-ui', url: 'js/jquery-ui-1.12.1.min.js' },
-	{ lib: 'smoothScroll', url: 'js/smoothScroll.js' },
-	{ lib: 'jfeed', url: 'js/jquery.jfeed.js' },
-	{ lib: 'lightbox', url: 'js/jquery.lightbox_me.js' },
-	{ lib: 'colorPicker', url: 'js/colorPicker/js/colorpicker.js' }
+	{ lib: 'jquery-ui', url: 'js/libs/jquery-ui-1.12.1.min.js' },
+	{ lib: 'smoothScroll', url: 'js/util/smoothScroll.js' },
+	{ lib: 'jfeed', url: 'js/util/jquery.jfeed.js' },
+	{ lib: 'lightbox', url: 'js/util/jquery.lightbox_me.js' },
+	{ lib: 'colorPicker', url: 'js/util/colorPicker/js/colorpicker.js' }
 ];
 
 var libs = {};
